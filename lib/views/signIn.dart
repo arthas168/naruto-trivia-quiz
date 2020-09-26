@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:quizapp/views/signUp.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 class SignIn extends StatefulWidget {
@@ -22,7 +23,9 @@ class _SignInState extends State<SignIn> {
         brightness: Brightness.light
       ),
       body: Form(
+        key: _formKey,
         child: Container(
+          margin: EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children:[
               Spacer(),
@@ -52,7 +55,48 @@ class _SignInState extends State<SignIn> {
                 },
               ),
               SizedBox(
-                  height: 80
+                  height: 24
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(30)
+                ),
+                height: 50,
+                width: MediaQuery.of(context).size.width - 48,
+                alignment: Alignment.center,
+                child: Text("Sign In",
+                style: TextStyle(
+                  color:Colors.white,
+                  fontSize: 16
+                ))
+              ),
+              SizedBox(
+                  height: 18
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account? ",
+                  style: TextStyle(
+                    fontSize: 16,
+                  )),
+                  GestureDetector(
+                    onTap: (){
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                          builder: (context) => SignUp()
+                      ));
+                    },
+                    child: Text("Click here.", style: TextStyle(
+                      fontSize: 16,
+                      decoration: TextDecoration.underline
+                    )),
+                  )
+                ],
+              ),
+              SizedBox(
+                  height: 50
               ),
           ],),
         ),
