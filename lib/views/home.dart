@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:quizapp/widgets/widgets.dart';
 
+import 'create-quiz.dart';
+
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
@@ -13,13 +15,26 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.blue,
           elevation: 0,
           brightness: Brightness.light
       ),
       body: Container(
-        // TODO: Home screen
-      )
+        child: Column(
+          children: [
+
+          ]
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          print("Add quiz");
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => CreateQuiz()
+          ));
+        },
+      ),
     );
   }
 }

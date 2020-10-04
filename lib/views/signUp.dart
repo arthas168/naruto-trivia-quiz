@@ -80,7 +80,7 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.blue,
           elevation: 0,
           brightness: Brightness.light
       ),
@@ -159,7 +159,7 @@ class _SignUpState extends State<SignUp> {
                 child: Container(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
-                        color: Colors.deepPurple,
+                        color: Colors.blue,
                         borderRadius: BorderRadius.circular(30)
                     ),
                     height: 50,

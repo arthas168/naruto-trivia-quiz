@@ -21,7 +21,9 @@ class _SignInState extends State<SignIn> {
   createAlertDialog(BuildContext context){
     return showDialog(context: context, builder: (context){
       return AlertDialog(
-        title: Icon(IconData(59137, fontFamily: 'MaterialIcons'), color: Colors.red),
+        title: Icon(
+            IconData(59137, fontFamily: 'MaterialIcons'),
+            color: Colors.red),
         content: Text("There is no user registered with the email address \"" + email + "\"."),
         actions: [
           MaterialButton(
@@ -74,7 +76,7 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         title: appBar(context),
         centerTitle: true,
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.blue,
         elevation: 0,
         brightness: Brightness.light
       ),
@@ -140,7 +142,7 @@ class _SignInState extends State<SignIn> {
                 child: Container(
                   padding: EdgeInsets.symmetric(vertical: 16),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple,
+                    color: Colors.blue,
                     borderRadius: BorderRadius.circular(30)
                   ),
                   height: 50,
