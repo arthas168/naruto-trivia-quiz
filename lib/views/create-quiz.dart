@@ -39,8 +39,6 @@ class _CreateQuizState extends State<CreateQuiz> {
                           height: 10
                       ),
                       TextFormField(
-                        //  TODO: fix this
-                        // ignore: missing_return
                         validator: (value){
 
                           if(value.length == 0) {
@@ -51,6 +49,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                             return "Title must be at least 3 characters long.";
                           }
 
+                          return null;
                         },
                         decoration: InputDecoration(
                             hintText: "Title"
@@ -60,8 +59,6 @@ class _CreateQuizState extends State<CreateQuiz> {
                         },
                       ),
                       TextFormField(
-                        //  TODO: fix this
-                        // ignore: missing_return
                         validator: (value){
 
                           if(value.length == 0) {
@@ -72,6 +69,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                             return "Description must be at least 6 characters long.";
                           }
 
+                          return null;
                         },
                         decoration: InputDecoration(
                             hintText: "Description"

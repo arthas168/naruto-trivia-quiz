@@ -36,6 +36,26 @@ class _SignInState extends State<SignIn> {
       );
     });
   }
+  // TODO: this is horrible ...
+  createWrongPassDialog(BuildContext context){
+    return showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: Icon(
+            IconData(59137, fontFamily: 'MaterialIcons'),
+            color: Colors.red),
+        content: Text("Oops! Wrong password."),
+        actions: [
+          MaterialButton(
+              child: Text("CLOSE"),
+              onPressed: (){
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+              }
+          )
+        ],
+      );
+    });
+  }
+
 
   signIn() async {
 
@@ -50,6 +70,14 @@ class _SignInState extends State<SignIn> {
         int lastSquareBracketIndex = value.toString().substring(1).indexOf("]");
         if(value.toString().substring(0, lastSquareBracketIndex + 2) == "[firebase_auth/user-not-found]"){
           createAlertDialog(context);
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
+
+        if(value.toString().substring(0, lastSquareBracketIndex + 2) == "[firebase_auth/wrong-password]"){
+          createWrongPassDialog(context);
           setState(() {
             _isLoading = false;
           });
@@ -95,15 +123,19 @@ class _SignInState extends State<SignIn> {
               TextFormField(
                 validator: (value){
 
+                  if(value.length == 0){
+                    return "Please enter email address.";
+                  }
+
                   // TODO: extract this in utils folder
                   bool isValidEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
 
                   if(!isValidEmail){
                     return "Please enter a valid email address.";
                   }
+                  return null;
 
-                  return value.isEmpty ? "Please enter email." : null;
-                },
+                  },
                 decoration: InputDecoration(
                   hintText: "Email"
                 ),
@@ -116,13 +148,18 @@ class _SignInState extends State<SignIn> {
               ),
               TextFormField(
                 obscureText: true,
+
                 validator: (value){
+
+                  if(value.length == 0){
+                    return "Please enter password.";
+                  }
 
                   if(value.length < 6){
                     return "Password must be at least 6 characters long.";
                   }
 
-                  return value.isEmpty ? "Please enter password." : null;
+                  return null;
                 },
                 decoration: InputDecoration(
                     hintText: "Password"

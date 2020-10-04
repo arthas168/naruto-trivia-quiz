@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:quizapp/views/home.dart';
 import 'package:quizapp/views/signIn.dart';
 
 void main() {
@@ -21,7 +20,7 @@ class App extends StatelessWidget {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(home: Home());
+          return MaterialApp(home: SignIn());
         }
 
         // Otherwise, show something whilst waiting for initialization to complete

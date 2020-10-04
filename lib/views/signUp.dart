@@ -98,7 +98,15 @@ class _SignUpState extends State<SignUp> {
               Spacer(),
               TextFormField(
                 validator: (value){
-                  return value.isEmpty ? "Please enter name." : null;
+                  if(value.length == 0) {
+                    return "Please enter name.";
+                  }
+
+                  if(value.length < 3){
+                    return "Name must be at least 3 characters long.";
+                  }
+
+                  return null;
                 },
                 decoration: InputDecoration(
                     hintText: "Name"
@@ -114,6 +122,10 @@ class _SignUpState extends State<SignUp> {
                     return "Email address already in use.";
                   }
 
+                  if(value.length == 0){
+                    return "Please enter email address.";
+                  }
+
                   // TODO: extract this in utils folder
                   bool isValidEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
 
@@ -121,7 +133,8 @@ class _SignUpState extends State<SignUp> {
                     return "Please enter a valid email address.";
                   }
 
-                  return value.isEmpty ? "Please enter email." : null;
+                  return null;
+
                 },
                 decoration: InputDecoration(
                     hintText: "Email"
@@ -136,10 +149,16 @@ class _SignUpState extends State<SignUp> {
               TextFormField(
                 obscureText: true,
                 validator: (value){
-                  if(password.length < 6){
+
+                  if(value.length == 0){
+                    return "Please enter password.";
+                  }
+
+                  if(value.length < 6){
                     return "Password must be at least 6 characters long.";
                   }
-                  return value.isEmpty ? "Please enter password." : null;
+
+                  return null;
                 },
                 decoration: InputDecoration(
                     hintText: "Password"
