@@ -3,7 +3,6 @@ import "package:flutter/material.dart";
 import 'package:quizapp/services/auth.dart';
 import 'package:quizapp/views/signIn.dart';
 import 'package:quizapp/widgets/widgets.dart';
-
 import 'home.dart';
 
 class SignUp extends StatefulWidget {
@@ -25,7 +24,7 @@ class _SignUpState extends State<SignUp> {
     return showDialog(context: context, builder: (context){
       return AlertDialog(
         title: Icon(IconData(59137, fontFamily: 'MaterialIcons'), color: Colors.red),
-        content: Text("Email address is already in use."),
+        content: Text("Email address \"" + email + "\" is already in use."),
         actions: [
           MaterialButton(
             child: Text("CLOSE"),
@@ -54,6 +53,7 @@ class _SignUpState extends State<SignUp> {
                 builder: (context) => Home()
             ));
           }else{
+            // TODO: Make this more generic and export to 'utils' folder
             int lastSquareBracketIndex = value.toString().substring(1).indexOf("]");
             if(value.toString().substring(0, lastSquareBracketIndex + 2) == "[firebase_auth/email-already-in-use]"){
               createAlertDialog(context);

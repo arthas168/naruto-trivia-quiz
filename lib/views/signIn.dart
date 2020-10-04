@@ -2,7 +2,6 @@ import "package:flutter/material.dart";
 import 'package:quizapp/services/auth.dart';
 import 'package:quizapp/views/signUp.dart';
 import 'package:quizapp/widgets/widgets.dart';
-
 import 'home.dart';
 
 class SignIn extends StatefulWidget {
@@ -18,7 +17,26 @@ class _SignInState extends State<SignIn> {
 
   bool _isLoading = false;
 
+  // TODO: Make this generic and export to 'utils' folder
+  createAlertDialog(BuildContext context){
+    return showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: Icon(IconData(59137, fontFamily: 'MaterialIcons'), color: Colors.red),
+        content: Text("There is no user registered with the email address \"" + email + "\"."),
+        actions: [
+          MaterialButton(
+              child: Text("CLOSE"),
+              onPressed: (){
+                Navigator.of(context, rootNavigator: true).pop('dialog');
+              }
+          )
+        ],
+      );
+    });
+  }
+
   signIn() async {
+
     if (_formKey.currentState.validate()){
 
       setState(() {
@@ -26,9 +44,19 @@ class _SignInState extends State<SignIn> {
       });
 
       await authService.signInWithEmalAndPassword(email, password).then((value){
+
+        int lastSquareBracketIndex = value.toString().substring(1).indexOf("]");
+        if(value.toString().substring(0, lastSquareBracketIndex + 2) == "[firebase_auth/user-not-found]"){
+          createAlertDialog(context);
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
+
         if(value != null){
           setState(() {
-            _isLoading = true;
+            _isLoading = false;
           });
           Navigator.pushReplacement(context, MaterialPageRoute(
               builder: (context) => Home()
@@ -64,6 +92,14 @@ class _SignInState extends State<SignIn> {
               Spacer(),
               TextFormField(
                 validator: (value){
+
+                  // TODO: extract this in utils folder
+                  bool isValidEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
+
+                  if(!isValidEmail){
+                    return "Please enter a valid email address.";
+                  }
+
                   return value.isEmpty ? "Please enter email." : null;
                 },
                 decoration: InputDecoration(
@@ -79,13 +115,18 @@ class _SignInState extends State<SignIn> {
               TextFormField(
                 obscureText: true,
                 validator: (value){
+
+                  if(value.length < 6){
+                    return "Password must be at least 6 characters long.";
+                  }
+
                   return value.isEmpty ? "Please enter password." : null;
                 },
                 decoration: InputDecoration(
                     hintText: "Password"
                 ),
                 onChanged:(val){
-                  email = val;
+                  password = val;
                 },
               ),
               SizedBox(
@@ -93,6 +134,7 @@ class _SignInState extends State<SignIn> {
               ),
               GestureDetector(
                 onTap: (){
+                  print("Tapping...");
                   signIn();
                 },
                 child: Container(
