@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import 'package:quizapp/widgets/widgets.dart';
 
-import 'create-quiz.dart';
+import 'createQuiz.dart';
 
 class Home extends StatefulWidget {
   @override

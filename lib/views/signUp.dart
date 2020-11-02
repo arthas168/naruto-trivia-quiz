@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
+import 'package:quizapp/helper/functions.dart';
 import 'package:quizapp/services/auth.dart';
 import 'package:quizapp/views/signIn.dart';
 import 'package:quizapp/widgets/widgets.dart';
@@ -49,6 +50,8 @@ class _SignUpState extends State<SignUp> {
             _isLoading = false;
           });
           if(value.toString().substring(0,1) != "["){
+            HelperFunctions.saveLoggedUserDetails(isLoggedIn: true);
+
             Navigator.pushReplacement(context, MaterialPageRoute(
                 builder: (context) => Home()
             ));
