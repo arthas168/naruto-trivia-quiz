@@ -1,3 +1,3 @@
-# Quiz Tsar
+# Naruto Trivia
 
-Create quizes/tests and hone your knowledge!
+The ultimate Naruto trivia quiz game
