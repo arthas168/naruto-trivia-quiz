@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
+import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/helper/functions.dart';
 import 'package:quizapp/services/auth.dart';
 import 'package:quizapp/views/signIn.dart';
@@ -83,7 +84,7 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: MAIN_COLOR,
           elevation: 0,
           brightness: Brightness.light
       ),
@@ -181,7 +182,7 @@ class _SignUpState extends State<SignUp> {
                 child: Container(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: MAIN_COLOR,
                         borderRadius: BorderRadius.circular(30)
                     ),
                     height: 50,

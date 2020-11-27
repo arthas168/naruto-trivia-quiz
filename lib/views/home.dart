@@ -15,6 +15,8 @@ class _HomeState extends State<Home> {
   Stream quizStream;
   DatabaseService databaseService = new DatabaseService();
 
+  // final user = databaseService.getCurrentUser();
+
   Widget quizList() {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
@@ -28,11 +30,8 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) {
                     return QuizTile(
                       title: snapshot.data.documents[index].data()["title"],
-                      description:
-                          snapshot.data.documents[index].data()["description"],
                       quizId: snapshot.data.documents[index].data()["quizId"],
                     );
-                    return Container();
                   });
         },
       ),
@@ -73,13 +72,9 @@ class _HomeState extends State<Home> {
 
 class QuizTile extends StatelessWidget {
   final String title;
-  final String description;
   final String quizId;
 
-  QuizTile(
-      {@required this.title,
-      @required this.description,
-      @required this.quizId});
+  QuizTile({@required this.title, @required this.quizId});
 
   @override
   Widget build(BuildContext context) {
@@ -113,10 +108,6 @@ class QuizTile extends StatelessWidget {
                             fontWeight: FontWeight.w600),
                       ),
                       SizedBox(height: 5),
-                      Text(
-                        description,
-                        style: TextStyle(color: Colors.white),
-                      ),
                     ],
                   ))
             ],

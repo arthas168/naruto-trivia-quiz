@@ -11,7 +11,7 @@ class CreateQuiz extends StatefulWidget {
 
 class _CreateQuizState extends State<CreateQuiz> {
   final _formKey = GlobalKey<FormState>();
-  String title, description, id;
+  String title, id;
 
   DatabaseService databaseService = new DatabaseService();
 
@@ -28,14 +28,13 @@ class _CreateQuizState extends State<CreateQuiz> {
       Map<String, String> quizMap = {
         "quizId": id,
         "title": title,
-        "description": description
       };
 
       await databaseService.addQuizData(quizMap, id).then((value) {
         setState(() {
           _isLoading = false;
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => AddQuestion(id)));
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => AddQuestion(id)));
         });
       });
     }
@@ -75,23 +74,6 @@ class _CreateQuizState extends State<CreateQuiz> {
                         decoration: InputDecoration(hintText: "Title"),
                         onChanged: (val) {
                           title = val;
-                        },
-                      ),
-                      TextFormField(
-                        validator: (value) {
-                          if (value.length == 0) {
-                            return "Please enter description.";
-                          }
-
-                          if (value.length < 6) {
-                            return "Description must be at least 6 characters long.";
-                          }
-
-                          return null;
-                        },
-                        decoration: InputDecoration(hintText: "Description"),
-                        onChanged: (val) {
-                          description = val;
                         },
                       ),
                       Spacer(),

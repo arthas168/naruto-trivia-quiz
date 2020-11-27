@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
   Future<void> addQuizData(Map quizData, String quizId) async {
@@ -23,7 +24,11 @@ class DatabaseService {
   }
 
   Future<Stream> getQuizData() async {
-    return await FirebaseFirestore.instance.collection("Quiz").snapshots();
+    return FirebaseFirestore.instance.collection("Quiz").snapshots();
+  }
+
+  getCurrentUser() {
+    return FirebaseAuth.instance.currentUser;
   }
 
   getSpecificQuizData(String quizId) async {

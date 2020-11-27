@@ -7,8 +7,8 @@ Widget appBar(BuildContext context){
         fontSize: 22,
       ),
       children: <TextSpan>[
-        TextSpan(text: 'Quiz', style: TextStyle(fontWeight: FontWeight.w300, color: Colors.white)),
-        TextSpan(text: 'Tsar 👑', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        TextSpan(text: 'Naruto', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        TextSpan(text: ' Quiz', style: TextStyle(fontWeight: FontWeight.w300, color: Colors.white)),
       ],
     ),
   );
