@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
+import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/playQuiz.dart';
 import 'package:quizapp/widgets/widgets.dart';
@@ -54,18 +55,19 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: MAIN_COLOR,
           elevation: 0,
           brightness: Brightness.light),
       body: quizList(),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () {
-          print("Add quiz");
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CreateQuiz()));
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: MAIN_COLOR,
+      //   child: Icon(Icons.add),
+      //   onPressed: () {
+      //     print("Add quiz");
+      //     Navigator.push(
+      //         context, MaterialPageRoute(builder: (context) => CreateQuiz()));
+      //   },
+      // ),
     );
   }
 }
@@ -85,13 +87,13 @@ class QuizTile extends StatelessWidget {
       },
       child: Container(
           margin: EdgeInsets.symmetric(vertical: 8),
-          height: 150,
+          height: 75,
           child: Stack(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
-                  color: Colors.blue,
+                  color: MAIN_COLOR,
                   width: MediaQuery.of(context).size.width - 48,
                 ),
               ),

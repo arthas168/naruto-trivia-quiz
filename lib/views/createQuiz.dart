@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/addQuestion.dart';
 import 'package:quizapp/widgets/widgets.dart';
@@ -46,7 +47,7 @@ class _CreateQuizState extends State<CreateQuiz> {
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: MAIN_COLOR,
           elevation: 0,
           brightness: Brightness.light),
       body: _isLoading
@@ -71,7 +72,13 @@ class _CreateQuizState extends State<CreateQuiz> {
 
                           return null;
                         },
-                        decoration: InputDecoration(hintText: "Title"),
+                        decoration: InputDecoration(
+                          hintText: "Title",
+                          focusedBorder: OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: MAIN_COLOR, width: 2.0),
+                          ),
+                        ),
                         onChanged: (val) {
                           title = val;
                         },
@@ -85,7 +92,7 @@ class _CreateQuizState extends State<CreateQuiz> {
                         child: Container(
                             padding: EdgeInsets.symmetric(vertical: 16),
                             decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: MAIN_COLOR,
                                 borderRadius: BorderRadius.circular(30)),
                             height: 50,
                             width: MediaQuery.of(context).size.width - 48,

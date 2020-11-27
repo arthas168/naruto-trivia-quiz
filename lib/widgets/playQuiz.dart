@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:quizapp/helper/constants.dart';
 
 class OptionTile extends StatefulWidget {
   final String identifier, label, correctAnswer, selectedOption;
@@ -26,18 +27,14 @@ class _OptionTileState extends State<OptionTile> {
           child: Text("${widget.identifier}",
               style: TextStyle(
                   color: widget.selectedOption == widget.label
-                      ? widget.correctAnswer == widget.selectedOption
-                          ? Colors.green
-                          : Colors.red
+                      ? MAIN_COLOR
                       : Colors.black54)),
           width: 28,
           height: 28,
           decoration: BoxDecoration(
               border: Border.all(
                   color: widget.label == widget.selectedOption
-                      ? widget.selectedOption == widget.correctAnswer
-                          ? Colors.green
-                          : Colors.red
+                      ? MAIN_COLOR
                       : Colors.grey,
                   width: 1.5),
               borderRadius: BorderRadius.circular(30)),

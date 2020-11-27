@@ -1,10 +1,11 @@
 import "package:flutter/material.dart";
+import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 class AddQuestion extends StatefulWidget {
-
   final String quizId;
+
   AddQuestion(this.quizId);
 
   @override
@@ -19,9 +20,7 @@ class _AddQuestionState extends State<AddQuestion> {
   String question = "", option1 = "", option2 = "", option3 = "", option4 = "";
 
   uploadQuizData() {
-
     if (_formKey.currentState.validate()) {
-
       setState(() {
         _isLoading = true;
       });
@@ -43,13 +42,10 @@ class _AddQuestionState extends State<AddQuestion> {
         setState(() {
           _isLoading = false;
         });
-
-      }).catchError((e){
+      }).catchError((e) {
         print(e);
       });
-
-
-    }else{
+    } else {
       print("error is happening ");
     }
   }
@@ -60,150 +56,179 @@ class _AddQuestionState extends State<AddQuestion> {
         appBar: AppBar(
             title: appBar(context),
             centerTitle: true,
-            backgroundColor: Colors.blue,
+            backgroundColor: MAIN_COLOR,
             elevation: 0,
             brightness: Brightness.light),
-        body: _isLoading ? Container(
-          child: CircularProgressIndicator()
-        ) : Form(
-          key: _formKey,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-            children: [
-              TextFormField(
-                validator: (value) {
-                  if (value.length == 0) {
-                    return "Please enter question.";
-                  }
+        body: _isLoading
+            ? Container(child: CircularProgressIndicator())
+            : Form(
+                key: _formKey,
+                child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          validator: (value) {
+                            if (value.length == 0) {
+                              return "Please enter question.";
+                            }
 
-                  if (value.length < 3) {
-                    return "Question must be at least 3 characters long.";
-                  }
+                            if (value.length < 3) {
+                              return "Question must be at least 3 characters long.";
+                            }
 
-                  return null;
-                },
-                decoration: InputDecoration(hintText: "Question"),
-                onChanged: (val) {
-                  question = val;
-                },
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value.length == 0) {
-                    return "Option cannot be empty.";
-                  }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Question",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: MAIN_COLOR, width: 2.0),
+                            ),
+                          ),
+                          onChanged: (val) {
+                            question = val;
+                          },
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        TextFormField(
+                          validator: (value) {
+                            if (value.length == 0) {
+                              return "Option cannot be empty.";
+                            }
 
-                  return null;
-                },
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Option 1 (Correct Answer)",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: MAIN_COLOR, width: 2.0),
+                            ),
+                          ),
+                          onChanged: (val) {
+                            option1 = val;
+                          },
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        TextFormField(
+                          validator: (value) {
+                            if (value.length == 0) {
+                              return "Option cannot be empty.";
+                            }
 
-                decoration: InputDecoration(hintText: "Option 1 (Correct Answer)"),
-                onChanged: (val) {
-                  option1 = val;
-                },
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextFormField(
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Option 2",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: MAIN_COLOR, width: 2.0),
+                            ),
+                          ),
+                          onChanged: (val) {
+                            option2 = val;
+                          },
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        TextFormField(
+                          validator: (value) {
+                            if (value.length == 0) {
+                              return "Option cannot be empty.";
+                            }
 
-                validator: (value) {
-                  if (value.length == 0) {
-                    return "Option cannot be empty.";
-                  }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Option 3",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: MAIN_COLOR, width: 2.0),
+                            ),
+                          ),
+                          onChanged: (val) {
+                            option3 = val;
+                          },
+                        ),
+                        SizedBox(
+                          height: 3,
+                        ),
+                        TextFormField(
+                          validator: (value) {
+                            if (value.length == 0) {
+                              return "Option cannot be empty.";
+                            }
 
-                  return null;
-                },
-                decoration: InputDecoration(hintText: "Option 2"),
-                onChanged: (val) {
-                  option2 = val;
-                },
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextFormField(
-
-                validator: (value) {
-                  if (value.length == 0) {
-                    return "Option cannot be empty.";
-                  }
-
-                  return null;
-                },
-                decoration: InputDecoration(hintText: "Option 3"),
-                onChanged: (val) {
-                  option3 = val;
-                },
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value.length == 0) {
-                    return "Option cannot be empty.";
-                  }
-
-                  return null;
-                },
-                decoration: InputDecoration(hintText: "Option 4"),
-                onChanged: (val) {
-                  option4 = val;
-                },
-              ),
-              Spacer(),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width / 2 - 20,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 20),
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Text(
-                        "Submit",
-                        style:
-                        TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      uploadQuizData();
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width / 2 - 40,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 20),
-                      decoration: BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Text(
-                        "Add Question",
-                        style:
-                        TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 5),
-            ],
-          )),
-        ));
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Option 4",
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: MAIN_COLOR, width: 2.0),
+                            ),
+                          ),
+                          onChanged: (val) {
+                            option4 = val;
+                          },
+                        ),
+                        Spacer(),
+                        Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                uploadQuizData();
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 40,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 20),
+                                decoration: BoxDecoration(
+                                    color: MAIN_COLOR,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Text(
+                                  "Add Question",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width:
+                                    MediaQuery.of(context).size.width / 2 - 20,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 20),
+                                decoration: BoxDecoration(
+                                    color: MAIN_COLOR,
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Text(
+                                  "Submit Quiz",
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 5),
+                      ],
+                    )),
+              ));
   }
 }

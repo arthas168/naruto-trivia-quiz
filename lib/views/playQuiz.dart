@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/models/questionModel.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/results.dart';
@@ -19,6 +20,8 @@ int totalAnswers = 0;
 int _correctAnswers = 0;
 int _incorrectAnswers = 0;
 int _notAnsweredQuestions = 0;
+
+int currentIndex = 0;
 
 class _PlayQuizState extends State<PlayQuiz> {
   DatabaseService databaseService = new DatabaseService();
@@ -43,6 +46,7 @@ class _PlayQuizState extends State<PlayQuiz> {
     questionModel.correctOption = questionSnapshot.data()["option1"];
     questionModel.isAnswered = false;
 
+
     return questionModel;
   }
 
@@ -55,6 +59,7 @@ class _PlayQuizState extends State<PlayQuiz> {
       _incorrectAnswers = 0;
       _notAnsweredQuestions = 0;
       totalAnswers = questionSnapshot.docs.length;
+      currentIndex = 0;
 
       print("$totalAnswers , total");
       setState(() {});
@@ -65,43 +70,52 @@ class _PlayQuizState extends State<PlayQuiz> {
 
   @override
   Widget build(BuildContext context) {
+    // print(questionSnapshot.docs[currentIndex].data());
+
     return Scaffold(
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
-          backgroundColor: Colors.blue,
+          backgroundColor: MAIN_COLOR,
           elevation: 0,
           brightness: Brightness.light),
       body: Container(
-          child: Column(
-        children: [
-          questionSnapshot == null
-              ? Container(child: Center(child: CircularProgressIndicator()))
-              : ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: questionSnapshot.docs.length,
-                  itemBuilder: (context, index) {
-                    return QuestionTile(
-                        questionModel:
-                            getModelFromSnapshot(questionSnapshot.docs[index]),
-                        index: index);
-                  },
-                )
-        ],
-      )),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.check),
-        onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Results(
-                      correct: _correctAnswers,
-                      incorrect: _incorrectAnswers,
-                      total: totalAnswers)));
-        },
+        child: Column(
+          children: [
+            questionSnapshot == null
+                ? Container(child: Center(child: CircularProgressIndicator()))
+                : Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    child: QuestionTile(
+                        questionModel: getModelFromSnapshot(
+                            questionSnapshot.docs[currentIndex]),
+                        index: currentIndex),
+                  ),
+            MaterialButton(
+              onPressed: () {
+                setState(() {
+                  if (currentIndex + 1 != totalAnswers) {
+                    currentIndex = currentIndex + 1;
+                  } else {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Results(
+                                correct: _correctAnswers,
+                                incorrect: _incorrectAnswers,
+                                total: totalAnswers)));
+                  }
+                });
+              },
+              color: MAIN_COLOR,
+              child: Text(currentIndex + 1 != totalAnswers ? "Next" : "Finish",
+                  style: TextStyle(fontSize: 18)),
+              textColor: Colors.white,
+              minWidth: 100,
+              height: 50,
+            )
+          ],
+        ),
       ),
     );
   }

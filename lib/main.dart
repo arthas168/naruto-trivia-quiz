@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/helper/functions.dart';
 import 'package:quizapp/views/home.dart';
 import 'package:quizapp/views/signIn.dart';
@@ -46,7 +47,7 @@ class _AppState extends State<App> {
         // Otherwise, show something whilst waiting for initialization to complete
         return Container(
             child: Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(backgroundColor: MAIN_COLOR,),
             )
         );
       },
