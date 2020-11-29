@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/playQuiz.dart';
+import 'package:quizapp/views/userMenu.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 import 'createQuiz.dart';
@@ -54,6 +55,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
           title: appBar(context),
+          actions: [
+            UserMenuActions(),
+          ],
           centerTitle: true,
           backgroundColor: MAIN_COLOR,
           elevation: 0,
