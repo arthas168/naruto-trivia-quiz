@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quizapp/helper/functions.dart';
+import 'package:quizapp/views/signIn.dart';
 
 class UserMenuActions extends StatelessWidget {
   @override
@@ -9,8 +12,7 @@ class UserMenuActions extends StatelessWidget {
         size: 26.0,
       ),
       onSelected: (value) => {print("value $value")},
-      itemBuilder: (context) =>
-      <PopupMenuEntry<String>>[
+      itemBuilder: (context) => <PopupMenuEntry<String>>[
         PopupMenuItem<String>(
           child: GestureDetector(
             onTap: () {
@@ -29,8 +31,17 @@ class UserMenuActions extends StatelessWidget {
         ),
         PopupMenuItem<String>(
           child: ListTile(
-            onTap: () {
+            onTap: () async {
               print("Logging out...");
+              await FirebaseAuth.instance.signOut();
+              HelperFunctions.saveLoggedUserDetails(isLoggedIn: false);
+
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => SignIn(),
+                  ),
+                  ModalRoute.withName('/'));
             },
             leading: const Icon(
               Icons.exit_to_app,
