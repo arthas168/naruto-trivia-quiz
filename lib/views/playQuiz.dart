@@ -46,7 +46,6 @@ class _PlayQuizState extends State<PlayQuiz> {
     questionModel.correctOption = questionSnapshot.data()["option1"];
     questionModel.isAnswered = false;
 
-
     return questionModel;
   }
 
@@ -88,7 +87,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                     padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     child: QuestionTile(
                         questionModel: getModelFromSnapshot(
-                            questionSnapshot.docs[currentIndex]),
+                            sortByDate(questionSnapshot.docs)[currentIndex]),
                         index: currentIndex),
                   ),
             MaterialButton(
@@ -312,4 +311,9 @@ class _QuestionTileState extends State<QuestionTile> {
       ],
     ));
   }
+}
+
+sortByDate(List<QueryDocumentSnapshot> docs) {
+  docs.sort((a, b) => a["date"].compareTo(b["date"]));
+  return docs;
 }
