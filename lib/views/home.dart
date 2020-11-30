@@ -5,8 +5,7 @@ import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/playQuiz.dart';
 import 'package:quizapp/views/userMenu.dart';
 import 'package:quizapp/widgets/widgets.dart';
-
-import 'createQuiz.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,6 +14,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Stream quizStream;
+  var preferences;
   DatabaseService databaseService = new DatabaseService();
 
   // final user = databaseService.getCurrentUser();
@@ -43,8 +43,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     databaseService.getQuizData().then((val) {
-      setState(() {
+      setState(() async {
         quizStream = val;
+        preferences = await SharedPreferences.getInstance();
       });
     });
     super.initState();
@@ -52,27 +53,18 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print("pref " + preferences);
     return Scaffold(
-      appBar: AppBar(
-          title: appBar(context),
-          actions: [
-            UserMenuActions(),
-          ],
-          centerTitle: true,
-          backgroundColor: MAIN_COLOR,
-          elevation: 0,
-          brightness: Brightness.light),
-      body: quizList(),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: MAIN_COLOR,
-      //   child: Icon(Icons.add),
-      //   onPressed: () {
-      //     print("Add quiz");
-      //     Navigator.push(
-      //         context, MaterialPageRoute(builder: (context) => CreateQuiz()));
-      //   },
-      // ),
-    );
+        appBar: AppBar(
+            title: appBar(context),
+            actions: [
+              UserMenuActions(),
+            ],
+            centerTitle: true,
+            backgroundColor: MAIN_COLOR,
+            elevation: 0,
+            brightness: Brightness.light),
+        body: quizList());
   }
 }
 
