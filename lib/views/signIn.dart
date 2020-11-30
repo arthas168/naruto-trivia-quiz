@@ -146,8 +146,8 @@ class _SignInState extends State<SignIn> {
                       decoration: InputDecoration(
                         hintText: "Email",
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: MAIN_COLOR, width: 2.0),
+                          borderSide:
+                              const BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
                       ),
                       onChanged: (val) {
@@ -171,8 +171,8 @@ class _SignInState extends State<SignIn> {
                       decoration: InputDecoration(
                         hintText: "Password",
                         focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: MAIN_COLOR, width: 2.0),
+                          borderSide:
+                              const BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
                       ),
                       onChanged: (val) {

@@ -15,7 +15,6 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-
   bool isUserLoggedIn = false;
 
   @override
@@ -41,15 +40,17 @@ class _AppState extends State<App> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(home: (isUserLoggedIn ?? false) ? Home() : SignIn());
+          return MaterialApp(
+              home: (isUserLoggedIn ?? false) ? Home() : SignIn());
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
         return Container(
             child: Center(
-              child: CircularProgressIndicator(backgroundColor: MAIN_COLOR,),
-            )
-        );
+          child: CircularProgressIndicator(
+            backgroundColor: MAIN_COLOR,
+          ),
+        ));
       },
     );
     return futureBuilder;

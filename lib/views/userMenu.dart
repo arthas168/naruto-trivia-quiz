@@ -38,12 +38,9 @@ class UserMenuActions extends StatelessWidget {
               await FirebaseAuth.instance.signOut();
               HelperFunctions.saveLoggedUserDetails(isLoggedIn: false);
 
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => SignIn(),
-                  ),
-                  ModalRoute.withName('/'));
+              Navigator.of(context).pop();
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => SignIn()));
             },
             leading: const Icon(
               Icons.exit_to_app,
