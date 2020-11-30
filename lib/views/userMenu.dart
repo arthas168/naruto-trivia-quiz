@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quizapp/helper/functions.dart';
 import 'package:quizapp/views/signIn.dart';
+import 'package:quizapp/views/userProfile.dart';
 
 class UserMenuActions extends StatelessWidget {
   @override
@@ -16,7 +17,8 @@ class UserMenuActions extends StatelessWidget {
         PopupMenuItem<String>(
           child: GestureDetector(
             onTap: () {
-              print("tapped");
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => UserProfile()));
             },
             child: Padding(
               padding: EdgeInsets.only(left: 13),
