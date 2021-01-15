@@ -17,9 +17,10 @@ class _HomeState extends State<Home> {
   var preferences;
   DatabaseService databaseService = new DatabaseService();
 
-  // final user = databaseService.getCurrentUser();
-
   Widget quizList() {
+
+    print("am in home");
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: StreamBuilder(
@@ -43,9 +44,9 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     databaseService.getQuizData().then((val) {
-      setState(() async {
+      setState(() {
         quizStream = val;
-        preferences = await SharedPreferences.getInstance();
+        // preferences = await SharedPreferences.getInstance();
       });
     });
     super.initState();
@@ -53,7 +54,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print("pref " + preferences);
+    print("pref $preferences");
     return Scaffold(
         appBar: AppBar(
             title: appBar(context),
