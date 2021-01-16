@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/helper/functions.dart';
+import 'package:quizapp/providers/coins_provider.dart';
+import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/views/home.dart';
 import 'package:quizapp/views/signIn.dart';
 
@@ -40,8 +43,14 @@ class _AppState extends State<App> {
 
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
-          return MaterialApp(
-              home: (isUserLoggedIn ?? false) ? Home() : SignIn());
+          return ChangeNotifierProvider(
+            create: (BuildContext context) => UnlockedQuizzesProvider(),
+            child: ChangeNotifierProvider(
+              create: (BuildContext context) => CoinsProvider(),
+              child: MaterialApp(
+                  home: (isUserLoggedIn ?? false) ? Home() : SignIn()),
+            ),
+          );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete

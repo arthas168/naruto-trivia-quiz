@@ -19,6 +19,7 @@ class Results extends StatefulWidget {
 class _ResultsState extends State<Results> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
             title: appBar(context),
@@ -39,7 +40,7 @@ class _ResultsState extends State<Results> {
                   padding: EdgeInsets.all(16),
                   alignment: Alignment.center,
                   child: Text(
-                    "You answered ${widget.correct} answers correctly and ${widget.incorrect} answers incorrectly. ${widget.total - (widget.correct + widget.incorrect)} questions left unanswered.",
+                    "You answered ${widget.correct} answers correctly and ${widget.incorrect} answers incorrectly. \n${widget.total - (widget.correct + widget.incorrect)} questions left unanswered.",
                     style: TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
@@ -50,7 +51,7 @@ class _ResultsState extends State<Results> {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      "Go back to Quizzes",
+                      "Go back to Home",
                       style: TextStyle(
                           color: MAIN_COLOR,
                           fontSize: 18,

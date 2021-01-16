@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/models/questionModel.dart';
+import 'package:quizapp/providers/coins_provider.dart';
+import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/results.dart';
 import 'package:quizapp/widgets/playQuiz.dart';
@@ -70,6 +73,10 @@ class _PlayQuizState extends State<PlayQuiz> {
   @override
   Widget build(BuildContext context) {
     // print(questionSnapshot.docs[currentIndex].data());
+    var coinsProvider = Provider.of<CoinsProvider>(context);
+    var unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
+
+    DatabaseService databaseService = new DatabaseService();
 
     return Scaffold(
       appBar: AppBar(
@@ -91,20 +98,58 @@ class _PlayQuizState extends State<PlayQuiz> {
                         index: currentIndex),
                   ),
             MaterialButton(
-              onPressed: () {
-                setState(() {
-                  if (currentIndex + 1 != totalAnswers) {
+              onPressed: () async {
+                if (currentIndex + 1 != totalAnswers) {
+                  setState(() {
                     currentIndex = currentIndex + 1;
-                  } else {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Results(
-                                correct: _correctAnswers,
-                                incorrect: _incorrectAnswers,
-                                total: totalAnswers)));
+                  });
+                } else {
+                  // TODO: generify this with the points map for each pack
+                  if (_correctAnswers >= 8) {
+                    // TODO: unlock next
+                    print("unlocking next...");
+                    unlockedQuizzesProvider.setNumOfUnlockedQuizzes(
+                        unlockedQuizzesProvider.numOfUnlockedQuizzes + 1);
                   }
-                });
+
+                  if (_correctAnswers == 9) {
+                    // TODO: add 1 coin
+                    final currentPointsInt = int.parse(coinsProvider.coins);
+                    coinsProvider.setCoins((currentPointsInt + 1).toString());
+
+                    Map<String, String> coinsMap = {
+                      "coins": coinsProvider.coins,
+                    };
+
+                    var currentUser = await databaseService.getCurrentUser();
+
+                    databaseService.addUserCoins(
+                        coinsMap, currentUser.email.toString());
+                  }
+
+                  if (_correctAnswers == 10) {
+                    // TODO: add 3 coins
+                    final currentPointsInt = int.parse(coinsProvider.coins);
+                    coinsProvider.setCoins((currentPointsInt + 3).toString());
+
+                    Map<String, String> coinsMap = {
+                      "coins": coinsProvider.coins,
+                    };
+
+                    var currentUser = await databaseService.getCurrentUser();
+
+                    databaseService.addUserCoins(
+                        coinsMap, currentUser.email.toString());
+                  }
+
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Results(
+                              correct: _correctAnswers,
+                              incorrect: _incorrectAnswers,
+                              total: totalAnswers)));
+                }
               },
               color: MAIN_COLOR,
               child: Text(currentIndex + 1 != totalAnswers ? "Next" : "Finish",

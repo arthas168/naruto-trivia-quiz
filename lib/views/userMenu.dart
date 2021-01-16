@@ -2,35 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quizapp/helper/functions.dart';
 import 'package:quizapp/views/signIn.dart';
-import 'package:quizapp/views/userProfile.dart';
 
 class UserMenuActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
       icon: Icon(
-        Icons.person,
+        Icons.settings,
         size: 26.0,
       ),
       onSelected: (value) => {print("value $value")},
       itemBuilder: (context) => <PopupMenuEntry<String>>[
-        PopupMenuItem<String>(
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => UserProfile()));
-            },
-            child: Padding(
-              padding: EdgeInsets.only(left: 13),
-              child: Row(children: [
-                Icon(Icons.person, color: Colors.grey),
-                Padding(
-                    padding: EdgeInsets.only(left: 34),
-                    child: Text("My Profile"))
-              ]),
-            ),
-          ),
-        ),
         PopupMenuItem<String>(
           child: ListTile(
             onTap: () async {

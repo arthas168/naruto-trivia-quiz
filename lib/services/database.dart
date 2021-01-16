@@ -23,8 +23,50 @@ class DatabaseService {
     });
   }
 
+  Future<void> addUserCoins(Map<String, String> coinsData, String userEmail) async {
+    await FirebaseFirestore.instance
+        .collection("UserCoins")
+        .doc(userEmail)
+        .set(coinsData)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
+  Future<void> addAvailableQuizzes(Map<String, int> quizzesData) async {
+
+    final user = await getCurrentUser();
+    final email = user.email.toString();
+
+    await FirebaseFirestore.instance
+        .collection("UserCoins")
+        .doc(email)
+        .set(quizzesData)
+        .catchError((e) {
+      print(e.toString());
+    });
+  }
+
   Future<Stream> getQuizData() async {
     return FirebaseFirestore.instance.collection("Quiz").snapshots();
+  }
+
+  getCoinsData() async {
+    var user = await getCurrentUser();
+
+    return FirebaseFirestore.instance
+        .collection("UserCoins")
+        .doc(user.email.toString())
+        .get();
+  }
+
+  getAvailableQuizzes() async {
+    var user = await getCurrentUser();
+
+    return FirebaseFirestore.instance
+        .collection("UserAvailableQuizzes")
+        .doc(user.email.toString())
+        .get();
   }
 
   getCurrentUser() {
