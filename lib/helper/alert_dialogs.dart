@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/providers/coins_provider.dart';
-import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/play_quiz.dart';
 
@@ -36,7 +34,6 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('Yes'),
             onPressed: () async {
               Map<String, String> coinsMap = {
                 "coins": (int.parse(coinsProvider.coins) + 1).toString(),
@@ -52,12 +49,13 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
               print("watching ad...");
               Navigator.of(context).pop();
             },
+            child: const Text('Yes'),
           ),
           TextButton(
-            child: const Text('No'),
             onPressed: () {
               Navigator.of(context).pop();
             },
+            child: const Text('No'),
           ),
         ],
       );
@@ -70,8 +68,8 @@ Future<void> payCoinAndPlayQuizDialog(BuildContext context, String quizId) async
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
-      var coinsProvider = Provider.of<CoinsProvider>(context);
-      DatabaseService databaseService = DatabaseService();
+      final coinsProvider = Provider.of<CoinsProvider>(context);
+      final DatabaseService databaseService = DatabaseService();
 
       return AlertDialog(
         // ignore: prefer_const_literals_to_create_immutables
@@ -93,7 +91,6 @@ Future<void> payCoinAndPlayQuizDialog(BuildContext context, String quizId) async
         ),
         actions: <Widget>[
           TextButton(
-            child: const Text('Yes'),
             onPressed: () async {
               if(coinsProvider.coins == "0"){
                 Fluttertoast.showToast(
@@ -115,21 +112,22 @@ Future<void> payCoinAndPlayQuizDialog(BuildContext context, String quizId) async
                   "coins": coinsProvider.coins,
                 };
 
-                var currentUser = await databaseService.getCurrentUser();
+                final currentUser = await databaseService.getCurrentUser();
 
                 databaseService.addUserCoins(
                     coinsMap, currentUser.email.toString());
 
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => PlayQuiz(quizId)));
               }
             },
+            child: const Text('Yes'),
           ),
           TextButton(
-            child: const Text('No'),
             onPressed: () {
               Navigator.of(context).pop();
             },
+            child: const Text('No'),
           ),
         ],
       );

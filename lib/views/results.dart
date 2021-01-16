@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
+import 'home.dart';
+
 class Results extends StatefulWidget {
   final int correct, incorrect, total;
 
@@ -34,23 +36,24 @@ class _ResultsState extends State<Results> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text("You got: ${widget.correct}/${widget.total}",
-                    style: TextStyle(fontSize: 16)),
-                SizedBox(height: 8),
+                    style: const TextStyle(fontSize: 16)),
+                const SizedBox(height: 8),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   alignment: Alignment.center,
                   child: Text(
                     "You answered ${widget.correct} answers correctly and ${widget.incorrect} answers incorrectly. \n${widget.total - (widget.correct + widget.incorrect)} questions left unanswered.",
-                    style: TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => Home()));
                     },
-                    child: Text(
+                    child: const Text(
                       "Go back to Home",
                       style: TextStyle(
                           color: MAIN_COLOR,

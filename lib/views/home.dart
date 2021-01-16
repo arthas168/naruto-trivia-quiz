@@ -18,11 +18,11 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   Stream quizStream;
   var preferences;
-  DatabaseService databaseService = new DatabaseService();
+  DatabaseService databaseService = DatabaseService();
 
   Widget quizList() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: StreamBuilder(
         stream: quizStream,
         builder: (context, snapshot) {
@@ -73,20 +73,20 @@ class _HomeState extends State<Home> {
 class Coins extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var coinsProvider = Provider.of<CoinsProvider>(context);
+    final coinsProvider = Provider.of<CoinsProvider>(context);
     return InkWell(
       onTap: () {
         watchAdForCoinsDialog(context);
       },
       child: Padding(
-        padding: EdgeInsets.all(6),
+        padding: const EdgeInsets.all(6),
         child: Row(
           children: [
             Text(coinsProvider.coins, style: TextStyle(fontSize: 18)),
-            SizedBox(
+            const SizedBox(
               width: 2.5,
             ),
-            FaIcon(
+            const FaIcon(
               FontAwesomeIcons.coins,
               size: 18,
             )
@@ -106,7 +106,7 @@ class QuizTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
+    final unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
 
     return GestureDetector(
       onTap: () {
@@ -115,7 +115,7 @@ class QuizTile extends StatelessWidget {
         }
       },
       child: Container(
-          margin: EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(vertical: 8),
           height: 75,
           child: Stack(
             children: [
@@ -135,12 +135,12 @@ class QuizTile extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: TextStyle(
+                        style: const TextStyle(
                             color: Colors.white,
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                     ],
                   ))
             ],

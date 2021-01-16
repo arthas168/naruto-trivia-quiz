@@ -162,7 +162,7 @@ class _PlayQuizState extends State<PlayQuiz> {
             ),
             CircularCountDownTimer(
               // Countdown duration in Seconds
-              duration: 5,
+              duration: 17,
 
               // Controller to control (i.e Pause, Resume, Restart) the Countdown
               controller: _controller,
@@ -332,7 +332,7 @@ class _QuestionTileState extends State<QuestionTile> {
           ),
         ),
         const SizedBox(
-          height: 4,
+          height: 2,
         ),
         GestureDetector(
           onTap: () {
@@ -389,7 +389,7 @@ class _QuestionTileState extends State<QuestionTile> {
           ),
         ),
         const SizedBox(
-          height: 4,
+          height: 2,
         ),
         GestureDetector(
           onTap: () {
@@ -422,7 +422,7 @@ class _QuestionTileState extends State<QuestionTile> {
           ),
         ),
         const SizedBox(
-          height: 4,
+          height: 2,
         ),
         GestureDetector(
           onTap: () {
