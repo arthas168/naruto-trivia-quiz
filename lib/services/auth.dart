@@ -1,15 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthService {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future signInWithEmalAndPassword(String email, String password) async {
+  Future signInWithEmailAndPassword(String email, String password) async {
     try {
       final authResult = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return authResult.user.uid;
     } catch (e) {
-      print("ERROR SIGNING IN " + e.toString());
+      // ignore: avoid_print
+      print("ERROR SIGNING IN $e");
       return e.toString();
     }
   }
@@ -20,7 +21,8 @@ class AuthService {
           email: email, password: password);
       return authResult.user.uid;
     } catch (e) {
-      print("ERROR SIGNING UP " + e.toString());
+      // ignore: avoid_print
+      print("ERROR SIGNING UP $e");
       return e.toString();
     }
   }
@@ -29,6 +31,7 @@ class AuthService {
     try {
       return await _auth.signOut();
     } catch (e) {
+      // ignore: avoid_print
       print(e.toString());
       return null;
     }

@@ -1,80 +1,111 @@
-import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/helper/functions.dart';
 import 'package:quizapp/services/auth.dart';
-import 'package:quizapp/views/signIn.dart';
+import 'package:quizapp/views/sign_up.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 import 'home.dart';
 
-class SignUp extends StatefulWidget {
+class SignIn extends StatefulWidget {
   @override
-  _SignUpState createState() => _SignUpState();
+  _SignInState createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
-  String name, email, password;
-  AuthService authService = new AuthService();
+  String email, password;
+  AuthService authService = AuthService();
 
   bool _isLoading = false;
-  bool _isEmailAlreadyInUse = false;
 
   // TODO: Make this generic and export to 'utils' folder
-  createAlertDialog(BuildContext context) {
+  Future createAlertDialog(BuildContext context) {
     return showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Icon(IconData(59137, fontFamily: 'MaterialIcons'),
+            title: const Icon(IconData(59137, fontFamily: 'MaterialIcons'),
                 color: Colors.red),
-            content: Text("Email address \"" + email + "\" is already in use."),
+            content: Text(
+                // ignore: avoid_escaping_inner_quotes
+                "There is no user registered with the email address \"$email\"."),
             actions: [
               MaterialButton(
-                  child: Text("CLOSE"),
-                  onPressed: () {
-                    Navigator.of(context, rootNavigator: true).pop('dialog');
-                  })
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop('dialog');
+                },
+                child: const Text("CLOSE"),
+              )
             ],
           );
         });
   }
 
-  signUp() async {
+  // TODO: this is horrible ...
+  Future createWrongPassDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Icon(IconData(59137, fontFamily: 'MaterialIcons'),
+                color: Colors.red),
+            content: const Text("Oops! Wrong password."),
+            actions: [
+              MaterialButton(
+                onPressed: () {
+                  Navigator.of(context, rootNavigator: true).pop('dialog');
+                },
+                child: const Text("CLOSE"),
+              )
+            ],
+          );
+        });
+  }
+
+  // ignore: type_annotate_public_apis, always_declare_return_types
+  signIn() async {
     if (_formKey.currentState.validate()) {
       setState(() {
         _isLoading = true;
       });
+
       await authService
-          .signUpWithEmailAndPassword(email, password)
+          .signInWithEmailAndPassword(email, password)
           .then((value) {
+        final int lastSquareBracketIndex =
+            value.toString().substring(1).indexOf("]");
+        if (value.toString().substring(0, lastSquareBracketIndex + 2) ==
+            "[firebase_auth/user-not-found]") {
+          createAlertDialog(context);
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
+
+        if (value.toString().substring(0, lastSquareBracketIndex + 2) ==
+            "[firebase_auth/wrong-password]") {
+          createWrongPassDialog(context);
+          setState(() {
+            _isLoading = false;
+          });
+          return;
+        }
+
         if (value != null) {
           setState(() {
             _isLoading = false;
           });
-          if (value.toString().substring(0, 1) != "[") {
-            HelperFunctions.saveLoggedUserDetails(isLoggedIn: true);
 
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => Home()));
-          } else {
-            // TODO: Make this more generic and export to 'utils' folder
-            int lastSquareBracketIndex =
-                value.toString().substring(1).indexOf("]");
-            if (value.toString().substring(0, lastSquareBracketIndex + 2) ==
-                "[firebase_auth/email-already-in-use]") {
-              createAlertDialog(context);
-            }
-          }
-        } else {
-          print("Invalid request.");
-          setState(() {
-            _isLoading = false;
-          });
+          HelperFunctions.saveLoggedUserDetails(isLoggedIn: true);
+
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Home()));
         }
       });
     } else {
+      // ignore: avoid_print
       print("Form values are invalid.");
     }
   }
@@ -89,78 +120,49 @@ class _SignUpState extends State<SignUp> {
           elevation: 0,
           brightness: Brightness.light),
       body: _isLoading
+          // ignore: avoid_unnecessary_containers
           ? Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
+              child: const Center(
+              child: CircularProgressIndicator(),
+            ))
           : Form(
               key: _formKey,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 24),
+                margin: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
                   children: [
-                    Spacer(),
+                    const Spacer(),
                     TextFormField(
                       validator: (value) {
-                        if (value.length == 0) {
-                          return "Please enter name.";
-                        }
-
-                        if (value.length < 3) {
-                          return "Name must be at least 3 characters long.";
-                        }
-
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        hintText: "Name",
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: MAIN_COLOR, width: 2.0),
-                        ),
-                      ),
-                      onChanged: (val) {
-                        name = val;
-                      },
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (_isEmailAlreadyInUse) {
-                          return "Email address already in use.";
-                        }
-
-                        if (value.length == 0) {
+                        if (value.isEmpty) {
                           return "Please enter email address.";
                         }
 
                         // TODO: extract this in utils folder
-                        bool isValidEmail = RegExp(
+                        final bool isValidEmail = RegExp(
                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                             .hasMatch(email);
 
                         if (!isValidEmail) {
                           return "Please enter a valid email address.";
                         }
-
                         return null;
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Email",
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: MAIN_COLOR, width: 2.0),
+                          borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
                       ),
                       onChanged: (val) {
                         email = val;
                       },
                     ),
-                    SizedBox(height: 6),
+                    const SizedBox(height: 6),
                     TextFormField(
                       obscureText: true,
                       validator: (value) {
-                        if (value.length == 0) {
+                        if (value.isEmpty) {
                           return "Please enter password.";
                         }
 
@@ -170,39 +172,38 @@ class _SignUpState extends State<SignUp> {
 
                         return null;
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: "Password",
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: MAIN_COLOR, width: 2.0),
+                          borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
                       ),
                       onChanged: (val) {
                         password = val;
                       },
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     GestureDetector(
                       onTap: () {
-                        signUp();
+                        signIn();
                       },
                       child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           decoration: BoxDecoration(
                               color: MAIN_COLOR,
                               borderRadius: BorderRadius.circular(30)),
                           height: 50,
                           width: MediaQuery.of(context).size.width - 48,
                           alignment: Alignment.center,
-                          child: Text("Sign Up",
+                          child: const Text("Sign In",
                               style: TextStyle(
                                   color: Colors.white, fontSize: 16))),
                     ),
-                    SizedBox(height: 18),
+                    const SizedBox(height: 18),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Already have an account? ",
+                        const Text("Don't have an account? ",
                             style: TextStyle(
                               fontSize: 16,
                             )),
@@ -211,16 +212,16 @@ class _SignUpState extends State<SignUp> {
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => SignIn()));
+                                    builder: (context) => SignUp()));
                           },
-                          child: Text("Click here.",
+                          child: const Text("Click here.",
                               style: TextStyle(
                                   fontSize: 16,
                                   decoration: TextDecoration.underline)),
                         )
                       ],
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quizapp/helper/constants.dart';
-import 'package:quizapp/views/userMenu.dart';
+import 'package:quizapp/views/user_menu.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 class UserProfile extends StatelessWidget {

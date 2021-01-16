@@ -3,18 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizapp/helper/constants.dart';
-import 'package:quizapp/models/questionModel.dart';
+import 'package:quizapp/models/question_model.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/results.dart';
-import 'package:quizapp/widgets/playQuiz.dart';
+import 'package:quizapp/widgets/play_quiz.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 class PlayQuiz extends StatefulWidget {
   final String quizId;
 
-  PlayQuiz(this.quizId);
+  const PlayQuiz(this.quizId);
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
@@ -28,18 +28,18 @@ int _notAnsweredQuestions = 0;
 int currentIndex = 0;
 
 class _PlayQuizState extends State<PlayQuiz> {
-  DatabaseService databaseService = new DatabaseService();
+  DatabaseService databaseService = DatabaseService();
   QuerySnapshot questionSnapshot;
 
   QuestionModel getModelFromSnapshot(DocumentSnapshot questionSnapshot) {
     final QuestionModel questionModel = QuestionModel();
-    questionModel.question = questionSnapshot.data()["question"];
+    questionModel.question = questionSnapshot.data()["question"].toString();
 
-    List<String> options = [
-      questionSnapshot.data()["option1"],
-      questionSnapshot.data()["option2"],
-      questionSnapshot.data()["option3"],
-      questionSnapshot.data()["option4"],
+    final List<String> options = [
+      questionSnapshot.data()["option1"].toString(),
+      questionSnapshot.data()["option2"].toString(),
+      questionSnapshot.data()["option3"].toString(),
+      questionSnapshot.data()["option4"].toString(),
     ];
 
     options.shuffle();
@@ -47,7 +47,7 @@ class _PlayQuizState extends State<PlayQuiz> {
     questionModel.option2 = options[1];
     questionModel.option3 = options[2];
     questionModel.option4 = options[3];
-    questionModel.correctOption = questionSnapshot.data()["option1"];
+    questionModel.correctOption = questionSnapshot.data()["option1"].toString();
     questionModel.isAnswered = false;
 
     return questionModel;
@@ -56,13 +56,14 @@ class _PlayQuizState extends State<PlayQuiz> {
   @override
   void initState() {
     databaseService.getSpecificQuizData(widget.quizId).then((value) {
-      questionSnapshot = value;
+      questionSnapshot = value as QuerySnapshot;
       _correctAnswers = 0;
       _incorrectAnswers = 0;
       _notAnsweredQuestions = 0;
       totalAnswers = questionSnapshot.docs.length;
       currentIndex = 0;
 
+      // ignore: avoid_print
       print("$totalAnswers , total");
       setState(() {});
     });
@@ -74,11 +75,12 @@ class _PlayQuizState extends State<PlayQuiz> {
   Widget build(BuildContext context) {
     // print(questionSnapshot.docs[currentIndex].data());
     final coinsProvider = Provider.of<CoinsProvider>(context);
-    final unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
+    final unlockedQuizzesProvider =
+        Provider.of<UnlockedQuizzesProvider>(context);
 
     final DatabaseService databaseService = DatabaseService();
 
-    CountDownController _controller = CountDownController();
+    final CountDownController _controller = CountDownController();
 
     return Scaffold(
       appBar: AppBar(
@@ -92,13 +94,18 @@ class _PlayQuizState extends State<PlayQuiz> {
         child: Column(
           children: [
             // ignore: avoid_unnecessary_containers
-            if (questionSnapshot == null) Container(child: const Center(child: CircularProgressIndicator())) else Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: QuestionTile(
-                        questionModel: getModelFromSnapshot(
-                            sortByDate(questionSnapshot.docs)[currentIndex]),
-                        index: currentIndex),
-                  ),
+            if (questionSnapshot == null)
+              // ignore: avoid_unnecessary_containers
+              Container(child: const Center(child: CircularProgressIndicator()))
+            else
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: QuestionTile(
+                    questionModel: getModelFromSnapshot(
+                        (questionSnapshot.docs)[currentIndex]),
+                    index: currentIndex),
+              ),
             MaterialButton(
               onPressed: () async {
                 if (currentIndex + 1 != totalAnswers) {
@@ -109,6 +116,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                   // TODO: generify this with the points map for each pack
                   if (_correctAnswers >= 8) {
                     // TODO: unlock next
+                    // ignore: avoid_print
                     print("unlocking next...");
                     unlockedQuizzesProvider.setNumOfUnlockedQuizzes(
                         unlockedQuizzesProvider.numOfUnlockedQuizzes + 1);
@@ -119,7 +127,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 1).toString());
 
-                    Map<String, String> coinsMap = {
+                    final Map<String, String> coinsMap = {
                       "coins": coinsProvider.coins,
                     };
 
@@ -134,7 +142,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 3).toString());
 
-                    Map<String, String> coinsMap = {
+                    final Map<String, String> coinsMap = {
                       "coins": coinsProvider.coins,
                     };
 
@@ -181,9 +189,6 @@ class _PlayQuizState extends State<PlayQuiz> {
               // Filling Color for Countdown Timer
               fillColor: Colors.red,
 
-              // Background Color for Countdown Widget
-              backgroundColor: null,
-
               // Border Thickness of the Countdown Circle
               strokeWidth: 5.0,
 
@@ -192,7 +197,9 @@ class _PlayQuizState extends State<PlayQuiz> {
 
               // Text Style for Countdown Text
               textStyle: const TextStyle(
-                  fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.bold),
+                  fontSize: 16.0,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
 
               // true for reverse countdown (max to 0), false for forward countdown (0 to max)
               isReverse: true,
@@ -200,22 +207,18 @@ class _PlayQuizState extends State<PlayQuiz> {
               // true for reverse animation, false for forward animation
               isReverseAnimation: true,
 
-              // Optional [bool] to hide the [Text] in this widget.
-              isTimerTextShown: true,
-
               // Function which will execute when the Countdown Ends
               onComplete: () async {
                 // Here, do whatever you want
-                print('Countdown Ended');
                 if (currentIndex + 1 != totalAnswers) {
                   setState(() {
                     currentIndex = currentIndex + 1;
                   });
-
                 } else {
                   // TODO: generify this with the points map for each pack
                   if (_correctAnswers >= 8) {
                     // TODO: unlock next
+                    // ignore: avoid_print
                     print("unlocking next...");
                     unlockedQuizzesProvider.setNumOfUnlockedQuizzes(
                         unlockedQuizzesProvider.numOfUnlockedQuizzes + 1);
@@ -226,7 +229,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 1).toString());
 
-                    Map<String, String> coinsMap = {
+                    final Map<String, String> coinsMap = {
                       "coins": coinsProvider.coins,
                     };
 
@@ -241,7 +244,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 3).toString());
 
-                    Map<String, String> coinsMap = {
+                    final Map<String, String> coinsMap = {
                       "coins": coinsProvider.coins,
                     };
 
@@ -259,8 +262,6 @@ class _PlayQuizState extends State<PlayQuiz> {
                               incorrect: _incorrectAnswers,
                               total: totalAnswers)));
                 }
-
-
               },
             ),
           ],
@@ -462,7 +463,8 @@ class _QuestionTileState extends State<QuestionTile> {
   }
 }
 
-List<QueryDocumentSnapshot> sortByDate(List<QueryDocumentSnapshot> docs) {
-  docs.sort((a, b) => a["date"].compareTo(b["date"]));
-  return docs;
-}
+// // TODO: this can be done in the db service
+// List<QueryDocumentSnapshot> sortByDate(List<QueryDocumentSnapshot> docs) {
+//   docs.sort((a, b) => a["date"].compareTo(b["date"]));
+//   return docs;
+// }

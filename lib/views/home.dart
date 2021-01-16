@@ -7,7 +7,7 @@ import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
-import 'package:quizapp/views/userMenu.dart';
+import 'package:quizapp/views/user_menu.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 class Home extends StatefulWidget {
@@ -17,6 +17,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Stream quizStream;
+  // ignore: type_annotate_public_apis, prefer_typing_uninitialized_variables
   var preferences;
   DatabaseService databaseService = DatabaseService();
 
@@ -29,11 +30,11 @@ class _HomeState extends State<Home> {
           return snapshot.data == null
               ? Container()
               : ListView.builder(
-                  itemCount: snapshot.data.documents.length,
+                  itemCount: int.parse(snapshot.data.documents.length.toString()),
                   itemBuilder: (context, index) {
                     return QuizTile(
-                        title: snapshot.data.documents[index].data()["title"],
-                        quizId: snapshot.data.documents[index].data()["quizId"],
+                        title: snapshot.data.documents[index].data()["title"].toString(),
+                        quizId: snapshot.data.documents[index].data()["quizId"].toString(),
                         index: index);
                   });
         },
@@ -82,7 +83,7 @@ class Coins extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         child: Row(
           children: [
-            Text(coinsProvider.coins, style: TextStyle(fontSize: 18)),
+            Text(coinsProvider.coins, style: const TextStyle(fontSize: 18)),
             const SizedBox(
               width: 2.5,
             ),
@@ -102,7 +103,7 @@ class QuizTile extends StatelessWidget {
   final String quizId;
   final int index;
 
-  QuizTile({@required this.title, @required this.quizId, this.index});
+  const QuizTile({@required this.title, @required this.quizId, this.index});
 
   @override
   Widget build(BuildContext context) {

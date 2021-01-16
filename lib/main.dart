@@ -6,7 +6,7 @@ import 'package:quizapp/helper/functions.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/views/home.dart';
-import 'package:quizapp/views/signIn.dart';
+import 'package:quizapp/views/sign_in.dart';
 
 void main() {
   runApp(App());
@@ -26,18 +26,20 @@ class _AppState extends State<App> {
     super.initState();
   }
 
+  // ignore: type_annotate_public_apis, always_declare_return_types
   checkUserLoggedIn() async {
     isUserLoggedIn = await HelperFunctions.getLoggedUserDetails();
   }
 
   @override
   Widget build(BuildContext context) {
-    var futureBuilder = FutureBuilder(
+    final futureBuilder = FutureBuilder(
       // Initialize FlutterFire
       future: Firebase.initializeApp(),
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
+          // ignore: avoid_print
           print("Something went wrong!");
         }
 
@@ -54,8 +56,9 @@ class _AppState extends State<App> {
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
+        // ignore: avoid_unnecessary_containers
         return Container(
-            child: Center(
+            child: const Center(
           child: CircularProgressIndicator(
             backgroundColor: MAIN_COLOR,
           ),

@@ -2,23 +2,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
-  Future<void> addQuizData(Map quizData, String quizId) async {
+  Future<void> addQuizData(Map<String, dynamic> quizData, String quizId) async {
     await FirebaseFirestore.instance
         .collection("Quiz")
         .doc(quizId)
         .set(quizData)
         .catchError((e) {
+      // ignore: avoid_print
       print(e.toString());
     });
   }
 
-  Future<void> addQuestionData(Map questionData, String quizId) async {
+  Future<void> addQuestionData(Map<String, dynamic> questionData, String quizId) async {
     await FirebaseFirestore.instance
         .collection("Quiz")
         .doc(quizId)
         .collection("QuestionAndAnswer")
         .add(questionData)
         .catchError((e) {
+      // ignore: avoid_print
       print(e.toString());
     });
   }
@@ -29,6 +31,7 @@ class DatabaseService {
         .doc(userEmail)
         .set(coinsData)
         .catchError((e) {
+      // ignore: avoid_print
       print(e.toString());
     });
   }
@@ -43,6 +46,7 @@ class DatabaseService {
         .doc(email)
         .set(quizzesData)
         .catchError((e) {
+      // ignore: avoid_print
       print(e.toString());
     });
   }
@@ -51,8 +55,9 @@ class DatabaseService {
     return FirebaseFirestore.instance.collection("Quiz").snapshots();
   }
 
+  // ignore: always_declare_return_types, type_annotate_public_apis
   getCoinsData() async {
-    var user = await getCurrentUser();
+    final user = await getCurrentUser();
 
     return FirebaseFirestore.instance
         .collection("UserCoins")
@@ -60,8 +65,9 @@ class DatabaseService {
         .get();
   }
 
+  // ignore: always_declare_return_types, type_annotate_public_apis
   getAvailableQuizzes() async {
-    var user = await getCurrentUser();
+    final user = await getCurrentUser();
 
     return FirebaseFirestore.instance
         .collection("UserAvailableQuizzes")
@@ -69,10 +75,12 @@ class DatabaseService {
         .get();
   }
 
+  // ignore: always_declare_return_types, type_annotate_public_apis
   getCurrentUser() {
     return FirebaseAuth.instance.currentUser;
   }
 
+  // ignore: always_declare_return_types, type_annotate_public_apis
   getSpecificQuizData(String quizId) async {
     return await FirebaseFirestore.instance
         .collection("Quiz")

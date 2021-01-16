@@ -6,26 +6,27 @@ import 'package:quizapp/widgets/widgets.dart';
 class AddQuestion extends StatefulWidget {
   final String quizId;
 
-  AddQuestion(this.quizId);
+  const AddQuestion(this.quizId);
 
   @override
   _AddQuestionState createState() => _AddQuestionState();
 }
 
 class _AddQuestionState extends State<AddQuestion> {
-  DatabaseService databaseService = new DatabaseService();
+  DatabaseService databaseService = DatabaseService();
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
   String question = "", option1 = "", option2 = "", option3 = "", option4 = "";
 
+  // ignore: type_annotate_public_apis, always_declare_return_types
   uploadQuizData() {
     if (_formKey.currentState.validate()) {
       setState(() {
         _isLoading = true;
       });
 
-      Map<String, String> questionMap = {
+      final Map<String, String> questionMap = {
         "question": question,
         "option1": option1,
         "option2": option2,
@@ -43,9 +44,11 @@ class _AddQuestionState extends State<AddQuestion> {
           _isLoading = false;
         });
       }).catchError((e) {
+        // ignore: avoid_print
         print(e);
       });
     } else {
+      // ignore: avoid_print
       print("error is happening ");
     }
   }
@@ -60,16 +63,17 @@ class _AddQuestionState extends State<AddQuestion> {
             elevation: 0,
             brightness: Brightness.light),
         body: _isLoading
-            ? Container(child: CircularProgressIndicator())
+            // ignore: avoid_unnecessary_containers
+            ? Container(child: const CircularProgressIndicator())
             : Form(
                 key: _formKey,
                 child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 24),
                     child: Column(
                       children: [
                         TextFormField(
                           validator: (value) {
-                            if (value.length == 0) {
+                            if (value.isEmpty) {
                               return "Please enter question.";
                             }
 
@@ -79,10 +83,10 @@ class _AddQuestionState extends State<AddQuestion> {
 
                             return null;
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Question",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                   color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
@@ -90,21 +94,21 @@ class _AddQuestionState extends State<AddQuestion> {
                             question = val;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
                         TextFormField(
                           validator: (value) {
-                            if (value.length == 0) {
+                            if (value.isEmpty) {
                               return "Option cannot be empty.";
                             }
 
                             return null;
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Option 1 (Correct Answer)",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                   color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
@@ -112,21 +116,21 @@ class _AddQuestionState extends State<AddQuestion> {
                             option1 = val;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
                         TextFormField(
                           validator: (value) {
-                            if (value.length == 0) {
+                            if (value.isEmpty) {
                               return "Option cannot be empty.";
                             }
 
                             return null;
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Option 2",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                   color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
@@ -134,21 +138,21 @@ class _AddQuestionState extends State<AddQuestion> {
                             option2 = val;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
                         TextFormField(
                           validator: (value) {
-                            if (value.length == 0) {
+                            if (value.isEmpty) {
                               return "Option cannot be empty.";
                             }
 
                             return null;
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Option 3",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                   color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
@@ -156,21 +160,21 @@ class _AddQuestionState extends State<AddQuestion> {
                             option3 = val;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 3,
                         ),
                         TextFormField(
                           validator: (value) {
-                            if (value.length == 0) {
+                            if (value.isEmpty) {
                               return "Option cannot be empty.";
                             }
 
                             return null;
                           },
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Option 4",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
+                              borderSide: BorderSide(
                                   color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
@@ -178,7 +182,7 @@ class _AddQuestionState extends State<AddQuestion> {
                             option4 = val;
                           },
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Row(
                           children: [
                             GestureDetector(
@@ -189,19 +193,19 @@ class _AddQuestionState extends State<AddQuestion> {
                                 alignment: Alignment.center,
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 40,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 24, vertical: 20),
                                 decoration: BoxDecoration(
                                     color: MAIN_COLOR,
                                     borderRadius: BorderRadius.circular(30)),
-                                child: Text(
+                                child: const Text(
                                   "Add Question",
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white),
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 8,
                             ),
                             GestureDetector(
@@ -212,12 +216,12 @@ class _AddQuestionState extends State<AddQuestion> {
                                 alignment: Alignment.center,
                                 width:
                                     MediaQuery.of(context).size.width / 2 - 20,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 24, vertical: 20),
                                 decoration: BoxDecoration(
                                     color: MAIN_COLOR,
                                     borderRadius: BorderRadius.circular(30)),
-                                child: Text(
+                                child: const Text(
                                   "Submit Quiz",
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white),
@@ -226,7 +230,7 @@ class _AddQuestionState extends State<AddQuestion> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                       ],
                     )),
               ));

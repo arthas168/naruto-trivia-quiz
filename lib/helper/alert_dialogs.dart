@@ -11,8 +11,8 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
     context: context,
     barrierDismissible: true,
     builder: (BuildContext context) {
-      var coinsProvider = Provider.of<CoinsProvider>(context);
-      DatabaseService databaseService = DatabaseService();
+      final coinsProvider = Provider.of<CoinsProvider>(context);
+      final DatabaseService databaseService = DatabaseService();
 
       return AlertDialog(
         // ignore: prefer_const_literals_to_create_immutables
@@ -35,17 +35,18 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              Map<String, String> coinsMap = {
+              final Map<String, String> coinsMap = {
                 "coins": (int.parse(coinsProvider.coins) + 1).toString(),
               };
 
-              var currentUser = await databaseService.getCurrentUser();
+              final currentUser = await databaseService.getCurrentUser();
 
               databaseService.addUserCoins(
                   coinsMap, currentUser.email.toString());
 
               coinsProvider.setCoins((int.parse(coinsProvider.coins)+1).toString());
 
+              // ignore: avoid_print
               print("watching ad...");
               Navigator.of(context).pop();
             },
@@ -103,12 +104,13 @@ Future<void> payCoinAndPlayQuizDialog(BuildContext context, String quizId) async
                 );
                 Navigator.of(context).pop();
               }else{
+                // ignore: avoid_print
                 print("loading quiz...");
                 Navigator.of(context).pop();
 
                 coinsProvider.setCoins((int.parse(coinsProvider.coins)-1).toString());
 
-                Map<String, String> coinsMap = {
+                final Map<String, String> coinsMap = {
                   "coins": coinsProvider.coins,
                 };
 

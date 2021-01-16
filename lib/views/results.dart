@@ -29,6 +29,7 @@ class _ResultsState extends State<Results> {
             backgroundColor: MAIN_COLOR,
             elevation: 0,
             brightness: Brightness.light),
+        // ignore: sized_box_for_whitespace
         body: Container(
             height: MediaQuery.of(context).size.height,
             child: Center(
