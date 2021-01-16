@@ -44,8 +44,10 @@ class _OptionTileState extends State<OptionTile> {
             const SizedBox(
               width: 8,
             ),
-            Text(widget.label,
-                style: const TextStyle(fontSize: 16, color: Colors.black54))
+            Flexible(
+              child: Text(widget.label,
+                  style: const TextStyle(fontSize: 16, color: Colors.black54)),
+            )
           ],
         ));
   }
