@@ -1,3 +1,4 @@
+import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -76,6 +77,8 @@ class _PlayQuizState extends State<PlayQuiz> {
     final unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
 
     final DatabaseService databaseService = DatabaseService();
+
+    CountDownController _controller = CountDownController();
 
     return Scaffold(
       appBar: AppBar(
@@ -156,7 +159,110 @@ class _PlayQuizState extends State<PlayQuiz> {
               height: 50,
               child: Text(currentIndex + 1 != totalAnswers ? "Next" : "Finish",
                   style: const TextStyle(fontSize: 18)),
-            )
+            ),
+            CircularCountDownTimer(
+              // Countdown duration in Seconds
+              duration: 5,
+
+              // Controller to control (i.e Pause, Resume, Restart) the Countdown
+              controller: _controller,
+
+              key: UniqueKey(),
+
+              // Width of the Countdown Widget
+              width: MediaQuery.of(context).size.width / 4,
+
+              // Height of the Countdown Widget
+              height: MediaQuery.of(context).size.height / 4,
+
+              // Default Color for Countdown Timer
+              color: Colors.white,
+
+              // Filling Color for Countdown Timer
+              fillColor: Colors.red,
+
+              // Background Color for Countdown Widget
+              backgroundColor: null,
+
+              // Border Thickness of the Countdown Circle
+              strokeWidth: 5.0,
+
+              // Begin and end contours with a flat edge and no extension
+              strokeCap: StrokeCap.butt,
+
+              // Text Style for Countdown Text
+              textStyle: const TextStyle(
+                  fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.bold),
+
+              // true for reverse countdown (max to 0), false for forward countdown (0 to max)
+              isReverse: true,
+
+              // true for reverse animation, false for forward animation
+              isReverseAnimation: true,
+
+              // Optional [bool] to hide the [Text] in this widget.
+              isTimerTextShown: true,
+
+              // Function which will execute when the Countdown Ends
+              onComplete: () async {
+                // Here, do whatever you want
+                print('Countdown Ended');
+                if (currentIndex + 1 != totalAnswers) {
+                  setState(() {
+                    currentIndex = currentIndex + 1;
+                  });
+
+                } else {
+                  // TODO: generify this with the points map for each pack
+                  if (_correctAnswers >= 8) {
+                    // TODO: unlock next
+                    print("unlocking next...");
+                    unlockedQuizzesProvider.setNumOfUnlockedQuizzes(
+                        unlockedQuizzesProvider.numOfUnlockedQuizzes + 1);
+                  }
+
+                  if (_correctAnswers == 9) {
+                    // TODO: add 1 coin
+                    final currentPointsInt = int.parse(coinsProvider.coins);
+                    coinsProvider.setCoins((currentPointsInt + 1).toString());
+
+                    Map<String, String> coinsMap = {
+                      "coins": coinsProvider.coins,
+                    };
+
+                    final currentUser = await databaseService.getCurrentUser();
+
+                    databaseService.addUserCoins(
+                        coinsMap, currentUser.email.toString());
+                  }
+
+                  if (_correctAnswers == 10) {
+                    // TODO: add 3 coins
+                    final currentPointsInt = int.parse(coinsProvider.coins);
+                    coinsProvider.setCoins((currentPointsInt + 3).toString());
+
+                    Map<String, String> coinsMap = {
+                      "coins": coinsProvider.coins,
+                    };
+
+                    final currentUser = await databaseService.getCurrentUser();
+
+                    databaseService.addUserCoins(
+                        coinsMap, currentUser.email.toString());
+                  }
+
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Results(
+                              correct: _correctAnswers,
+                              incorrect: _incorrectAnswers,
+                              total: totalAnswers)));
+                }
+
+
+              },
+            ),
           ],
         ),
       ),
@@ -179,12 +285,11 @@ class _QuestionTileState extends State<QuestionTile> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
-          height: 20,
+          height: 10,
         ),
         Text(
           widget.questionModel.question,
@@ -194,7 +299,7 @@ class _QuestionTileState extends State<QuestionTile> {
           ),
         ),
         const SizedBox(
-          height: 12,
+          height: 6,
         ),
         GestureDetector(
           onTap: () {
@@ -350,10 +455,10 @@ class _QuestionTileState extends State<QuestionTile> {
           ),
         ),
         const SizedBox(
-          height: 20,
+          height: 10,
         )
       ],
-    ));
+    );
   }
 }
 
