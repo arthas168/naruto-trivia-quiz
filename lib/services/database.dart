@@ -13,7 +13,8 @@ class DatabaseService {
     });
   }
 
-  Future<void> addQuestionData(Map<String, dynamic> questionData, String quizId) async {
+  Future<void> addQuestionData(
+      Map<String, dynamic> questionData, String quizId) async {
     await FirebaseFirestore.instance
         .collection("Quiz")
         .doc(quizId)
@@ -25,7 +26,8 @@ class DatabaseService {
     });
   }
 
-  Future<void> addUserCoins(Map<String, String> coinsData, String userEmail) async {
+  Future<void> addUserCoins(
+      Map<String, String> coinsData, String userEmail) async {
     await FirebaseFirestore.instance
         .collection("UserCoins")
         .doc(userEmail)
@@ -37,7 +39,6 @@ class DatabaseService {
   }
 
   Future<void> addAvailableQuizzes(Map<String, int> quizzesData) async {
-
     final user = await getCurrentUser();
     final email = user.email.toString();
 
@@ -52,7 +53,10 @@ class DatabaseService {
   }
 
   Future<Stream> getQuizData() async {
-    return FirebaseFirestore.instance.collection("Quiz").snapshots();
+    return FirebaseFirestore.instance
+        .collection("Quiz")
+        .orderBy("date")
+        .snapshots();
   }
 
   // ignore: always_declare_return_types, type_annotate_public_apis
@@ -86,6 +90,7 @@ class DatabaseService {
         .collection("Quiz")
         .doc(quizId)
         .collection("QuestionAndAnswer")
+        .orderBy("date")
         .get();
   }
 }
