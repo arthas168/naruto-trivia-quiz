@@ -31,7 +31,7 @@ class _PlayQuizState extends State<PlayQuiz> {
   QuerySnapshot questionSnapshot;
 
   QuestionModel getModelFromSnapshot(DocumentSnapshot questionSnapshot) {
-    QuestionModel questionModel = new QuestionModel();
+    final QuestionModel questionModel = QuestionModel();
     questionModel.question = questionSnapshot.data()["question"];
 
     List<String> options = [
@@ -54,7 +54,6 @@ class _PlayQuizState extends State<PlayQuiz> {
 
   @override
   void initState() {
-    print("${widget.quizId}");
     databaseService.getSpecificQuizData(widget.quizId).then((value) {
       questionSnapshot = value;
       _correctAnswers = 0;
@@ -73,10 +72,10 @@ class _PlayQuizState extends State<PlayQuiz> {
   @override
   Widget build(BuildContext context) {
     // print(questionSnapshot.docs[currentIndex].data());
-    var coinsProvider = Provider.of<CoinsProvider>(context);
-    var unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
+    final coinsProvider = Provider.of<CoinsProvider>(context);
+    final unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
 
-    DatabaseService databaseService = new DatabaseService();
+    final DatabaseService databaseService = DatabaseService();
 
     return Scaffold(
       appBar: AppBar(
@@ -85,13 +84,13 @@ class _PlayQuizState extends State<PlayQuiz> {
           backgroundColor: MAIN_COLOR,
           elevation: 0,
           brightness: Brightness.light),
+      // ignore: avoid_unnecessary_containers
       body: Container(
         child: Column(
           children: [
-            questionSnapshot == null
-                ? Container(child: Center(child: CircularProgressIndicator()))
-                : Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+            // ignore: avoid_unnecessary_containers
+            if (questionSnapshot == null) Container(child: const Center(child: CircularProgressIndicator())) else Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                     child: QuestionTile(
                         questionModel: getModelFromSnapshot(
                             sortByDate(questionSnapshot.docs)[currentIndex]),
@@ -121,7 +120,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                       "coins": coinsProvider.coins,
                     };
 
-                    var currentUser = await databaseService.getCurrentUser();
+                    final currentUser = await databaseService.getCurrentUser();
 
                     databaseService.addUserCoins(
                         coinsMap, currentUser.email.toString());
@@ -136,7 +135,7 @@ class _PlayQuizState extends State<PlayQuiz> {
                       "coins": coinsProvider.coins,
                     };
 
-                    var currentUser = await databaseService.getCurrentUser();
+                    final currentUser = await databaseService.getCurrentUser();
 
                     databaseService.addUserCoins(
                         coinsMap, currentUser.email.toString());
@@ -152,11 +151,11 @@ class _PlayQuizState extends State<PlayQuiz> {
                 }
               },
               color: MAIN_COLOR,
-              child: Text(currentIndex + 1 != totalAnswers ? "Next" : "Finish",
-                  style: TextStyle(fontSize: 18)),
               textColor: Colors.white,
               minWidth: 100,
               height: 50,
+              child: Text(currentIndex + 1 != totalAnswers ? "Next" : "Finish",
+                  style: const TextStyle(fontSize: 18)),
             )
           ],
         ),
@@ -169,7 +168,7 @@ class QuestionTile extends StatefulWidget {
   final QuestionModel questionModel;
   final int index;
 
-  QuestionTile({this.questionModel, this.index});
+  const QuestionTile({this.questionModel, this.index});
 
   @override
   _QuestionTileState createState() => _QuestionTileState();
@@ -184,17 +183,17 @@ class _QuestionTileState extends State<QuestionTile> {
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Text(
           widget.questionModel.question,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             color: Colors.black87,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 12,
         ),
         GestureDetector(
@@ -227,7 +226,7 @@ class _QuestionTileState extends State<QuestionTile> {
             selectedOption: _selectedOption,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         GestureDetector(
@@ -284,7 +283,7 @@ class _QuestionTileState extends State<QuestionTile> {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         GestureDetector(
@@ -317,7 +316,7 @@ class _QuestionTileState extends State<QuestionTile> {
             selectedOption: _selectedOption,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         GestureDetector(
@@ -350,7 +349,7 @@ class _QuestionTileState extends State<QuestionTile> {
             selectedOption: _selectedOption,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         )
       ],
@@ -358,7 +357,7 @@ class _QuestionTileState extends State<QuestionTile> {
   }
 }
 
-sortByDate(List<QueryDocumentSnapshot> docs) {
+List<QueryDocumentSnapshot> sortByDate(List<QueryDocumentSnapshot> docs) {
   docs.sort((a, b) => a["date"].compareTo(b["date"]));
   return docs;
 }

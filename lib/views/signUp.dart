@@ -184,7 +184,6 @@ class _SignUpState extends State<SignUp> {
                     SizedBox(height: 24),
                     GestureDetector(
                       onTap: () {
-                        print("Tapping...");
                         signUp();
                       },
                       child: Container(

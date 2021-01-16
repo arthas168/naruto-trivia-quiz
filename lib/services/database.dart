@@ -39,7 +39,7 @@ class DatabaseService {
     final email = user.email.toString();
 
     await FirebaseFirestore.instance
-        .collection("UserCoins")
+        .collection("UserAvailableQuizzes")
         .doc(email)
         .set(quizzesData)
         .catchError((e) {

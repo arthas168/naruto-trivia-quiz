@@ -182,7 +182,6 @@ class _SignInState extends State<SignIn> {
                     SizedBox(height: 24),
                     GestureDetector(
                       onTap: () {
-                        print("Tapping...");
                         signIn();
                       },
                       child: Container(

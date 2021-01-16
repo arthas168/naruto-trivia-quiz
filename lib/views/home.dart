@@ -7,7 +7,6 @@ import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
-import 'package:quizapp/views/playQuiz.dart';
 import 'package:quizapp/views/userMenu.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
@@ -22,8 +21,6 @@ class _HomeState extends State<Home> {
   DatabaseService databaseService = new DatabaseService();
 
   Widget quizList() {
-    print("am in home");
-
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: StreamBuilder(
@@ -58,7 +55,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print("pref $preferences");
     return Scaffold(
         appBar: AppBar(
             leading: Coins(),

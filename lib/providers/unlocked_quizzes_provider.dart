@@ -7,6 +7,7 @@ class UnlockedQuizzesProvider with ChangeNotifier {
 
   UnlockedQuizzesProvider() {
     _numOfUnlockedQuizzes = 1;
+    load();
   }
 
   int get numOfUnlockedQuizzes => _numOfUnlockedQuizzes;

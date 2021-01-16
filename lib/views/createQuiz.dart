@@ -86,7 +86,6 @@ class _CreateQuizState extends State<CreateQuiz> {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
-                          print("Tapping...");
                           createQuiz();
                         },
                         child: Container(

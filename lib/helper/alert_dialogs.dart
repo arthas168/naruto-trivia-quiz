@@ -6,7 +6,7 @@ import 'package:quizapp/helper/constants.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
-import 'package:quizapp/views/playQuiz.dart';
+import 'package:quizapp/views/play_quiz.dart';
 
 Future<void> watchAdForCoinsDialog(BuildContext context) async {
   return showDialog<void>(
