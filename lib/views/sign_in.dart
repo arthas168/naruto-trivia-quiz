@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import 'package:quizapp/helper/constants.dart';
-import 'package:quizapp/helper/functions.dart';
+import 'package:quizapp/helpers/constants.dart';
+import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/services/auth.dart';
 import 'package:quizapp/views/sign_up.dart';
 import 'package:quizapp/widgets/widgets.dart';

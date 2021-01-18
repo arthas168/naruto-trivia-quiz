@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:quizapp/helper/alert_dialogs.dart';
-import 'package:quizapp/helper/constants.dart';
+import 'package:quizapp/helpers/alert_dialogs.dart';
+import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
@@ -112,7 +112,7 @@ class QuizTile extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (unlockedQuizzesProvider.numOfUnlockedQuizzes > index) {
-          payCoinAndPlayQuizDialog(context, quizId);
+          payCoinAndPlayQuizDialog(context, quizId, index);
         }
       },
       child: Container(

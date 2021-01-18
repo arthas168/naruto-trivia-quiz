@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:quizapp/helper/constants.dart';
+import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
 import 'home.dart';

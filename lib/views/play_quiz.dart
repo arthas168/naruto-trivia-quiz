@@ -2,7 +2,8 @@ import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizapp/helper/constants.dart';
+import 'package:quizapp/helpers/constants.dart';
+import 'package:quizapp/helpers/points.dart';
 import 'package:quizapp/models/question_model.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
@@ -13,8 +14,9 @@ import 'package:quizapp/widgets/widgets.dart';
 
 class PlayQuiz extends StatefulWidget {
   final String quizId;
+  final int quizIndex;
 
-  const PlayQuiz(this.quizId);
+  const PlayQuiz(this.quizId, this.quizIndex);
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
@@ -79,8 +81,9 @@ class _PlayQuizState extends State<PlayQuiz> {
         Provider.of<UnlockedQuizzesProvider>(context);
 
     final DatabaseService databaseService = DatabaseService();
-
     final CountDownController _controller = CountDownController();
+
+    print(widget.quizId);
 
     return Scaffold(
       appBar: AppBar(
@@ -113,16 +116,25 @@ class _PlayQuizState extends State<PlayQuiz> {
                     currentIndex = currentIndex + 1;
                   });
                 } else {
-                  // TODO: generify this with the points map for each pack
-                  if (_correctAnswers >= 8) {
-                    // TODO: unlock next
+                  final packPoints = points[widget.quizId];
+                  final pointsToPass = packPoints.split(",").first;
+                  final pointsToGetOneCoin = packPoints.split(",")[1];
+                  final pointsToGetThreeCoins = packPoints.split(",")[2];
+
+                  if (_correctAnswers >= int.parse(pointsToPass)) {
                     // ignore: avoid_print
                     print("unlocking next...");
-                    unlockedQuizzesProvider.setNumOfUnlockedQuizzes(
-                        unlockedQuizzesProvider.numOfUnlockedQuizzes + 1);
+
+                    if (unlockedQuizzesProvider.numOfUnlockedQuizzes - 1 ==
+                        widget.quizIndex) {
+                      unlockedQuizzesProvider.setNumOfUnlockedQuizzes(
+                          unlockedQuizzesProvider.numOfUnlockedQuizzes + 1);
+                    }
                   }
 
-                  if (_correctAnswers == 9) {
+                  if (_correctAnswers == int.parse(pointsToGetOneCoin)) {
+                    // ignore: avoid_print
+                    print("adding 1 coin...");
                     // TODO: add 1 coin
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 1).toString());
@@ -137,8 +149,9 @@ class _PlayQuizState extends State<PlayQuiz> {
                         coinsMap, currentUser.email.toString());
                   }
 
-                  if (_correctAnswers == 10) {
-                    // TODO: add 3 coins
+                  if (_correctAnswers == int.parse(pointsToGetThreeCoins)) {
+                    // ignore: avoid_print
+                    print("adding 3 coins...");
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 3).toString());
 

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:quizapp/helper/functions.dart';
+import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/views/sign_in.dart';
 
 class UserMenuActions extends StatelessWidget {

@@ -44,7 +44,8 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
               databaseService.addUserCoins(
                   coinsMap, currentUser.email.toString());
 
-              coinsProvider.setCoins((int.parse(coinsProvider.coins)+1).toString());
+              coinsProvider
+                  .setCoins((int.parse(coinsProvider.coins) + 1).toString());
 
               // ignore: avoid_print
               print("watching ad...");
@@ -64,7 +65,8 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
   );
 }
 
-Future<void> payCoinAndPlayQuizDialog(BuildContext context, String quizId) async {
+Future<void> payCoinAndPlayQuizDialog(
+    BuildContext context, String quizId, int quizIndex) async {
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -85,30 +87,30 @@ Future<void> payCoinAndPlayQuizDialog(BuildContext context, String quizId) async
           child: ListBody(
             // ignore: prefer_const_literals_to_create_immutables
             children: <Widget>[
-              const Text(
-                  'Do you want to pay 1 coin and start the quiz now?'),
+              const Text('Do you want to pay 1 coin and start the quiz now?'),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              if(coinsProvider.coins == "0"){
+              if (coinsProvider.coins == "0") {
                 Fluttertoast.showToast(
-                    msg: "You don't have any coins. Click on the coins icon and watch and ad to get coins.",
+                    msg:
+                        "You don't have any coins. Click on the coins icon and watch and ad to get coins.",
                     toastLength: Toast.LENGTH_LONG,
                     gravity: ToastGravity.TOP,
                     backgroundColor: Colors.black,
                     textColor: Colors.white,
-                    fontSize: 16.0
-                );
+                    fontSize: 16.0);
                 Navigator.of(context).pop();
-              }else{
+              } else {
                 // ignore: avoid_print
                 print("loading quiz...");
                 Navigator.of(context).pop();
 
-                coinsProvider.setCoins((int.parse(coinsProvider.coins)-1).toString());
+                coinsProvider
+                    .setCoins((int.parse(coinsProvider.coins) - 1).toString());
 
                 final Map<String, String> coinsMap = {
                   "coins": coinsProvider.coins,
@@ -120,7 +122,7 @@ Future<void> payCoinAndPlayQuizDialog(BuildContext context, String quizId) async
                     coinsMap, currentUser.email.toString());
 
                 Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => PlayQuiz(quizId)));
+                    MaterialPageRoute(builder: (context) => PlayQuiz(quizId, quizIndex)));
               }
             },
             child: const Text('Yes'),

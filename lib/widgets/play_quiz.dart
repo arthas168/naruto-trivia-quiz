@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:quizapp/helper/constants.dart';
+import 'package:quizapp/helpers/constants.dart';
 
 class OptionTile extends StatefulWidget {
   final String identifier, label, correctAnswer, selectedOption;
