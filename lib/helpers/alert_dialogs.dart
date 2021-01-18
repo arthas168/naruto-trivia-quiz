@@ -9,14 +9,8 @@ import 'package:quizapp/views/play_quiz.dart';
 
 Future<void> watchAdForCoinsDialog(BuildContext context) async {
 
-  RewardedVideoAd.instance.load(adUnitId: RewardedVideoAd.testAdUnitId);
-  RewardedVideoAd.instance.listener =
-      (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
-    print('Rewarded event: $event');
-    if (event == RewardedVideoAdEvent.rewarded) {
-      print("hola");
-    }
-  };
+  RewardedVideoAd.instance
+      .load(adUnitId: RewardedVideoAd.testAdUnitId);
 
   return showDialog<void>(
     context: context,
@@ -52,14 +46,19 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
 
               final currentUser = await databaseService.getCurrentUser();
 
-              databaseService.addUserCoins(
-                  coinsMap, currentUser.email.toString());
-
-              coinsProvider
-                  .setCoins((int.parse(coinsProvider.coins) + 1).toString());
-
               // ignore: avoid_print
               print("watching ad...");
+              RewardedVideoAd.instance.listener = (RewardedVideoAdEvent event,
+                  {String rewardType, int rewardAmount}) {
+                print('Rewarded event: $event');
+                if (event == RewardedVideoAdEvent.rewarded) {
+                  databaseService.addUserCoins(
+                      coinsMap, currentUser.email.toString());
+
+                  coinsProvider.setCoins(
+                      (int.parse(coinsProvider.coins) + 1).toString());
+                }
+              };
               await RewardedVideoAd.instance.show();
               Navigator.of(context).pop();
             },

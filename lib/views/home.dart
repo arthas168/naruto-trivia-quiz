@@ -76,6 +76,7 @@ class Coins extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final coinsProvider = Provider.of<CoinsProvider>(context);
+
     return InkWell(
       onTap: () {
         watchAdForCoinsDialog(context);
