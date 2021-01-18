@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,10 +6,13 @@ import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
+import 'package:quizapp/services/ad_service.dart';
 import 'package:quizapp/views/home.dart';
 import 'package:quizapp/views/sign_in.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  FirebaseAdMob.instance.initialize(appId: AdMobService().getAdMobAppId());
   runApp(App());
 }
 

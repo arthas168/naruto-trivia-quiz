@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizapp/helpers/constants.dart';
@@ -7,6 +8,7 @@ import 'package:quizapp/helpers/points.dart';
 import 'package:quizapp/models/question_model.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
+import 'package:quizapp/services/ad_service.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/results.dart';
 import 'package:quizapp/widgets/play_quiz.dart';
@@ -32,6 +34,7 @@ int currentIndex = 0;
 class _PlayQuizState extends State<PlayQuiz> {
   DatabaseService databaseService = DatabaseService();
   QuerySnapshot questionSnapshot;
+  final ams = AdMobService();
 
   QuestionModel getModelFromSnapshot(DocumentSnapshot questionSnapshot) {
     final QuestionModel questionModel = QuestionModel();
@@ -83,7 +86,8 @@ class _PlayQuizState extends State<PlayQuiz> {
     final DatabaseService databaseService = DatabaseService();
     final CountDownController _controller = CountDownController();
 
-    print(widget.quizId);
+    final InterstitialAd endOfQuizAd = ams.endOfQuizAd();
+    endOfQuizAd.load();
 
     return Scaffold(
       appBar: AppBar(
@@ -135,7 +139,6 @@ class _PlayQuizState extends State<PlayQuiz> {
                   if (_correctAnswers == int.parse(pointsToGetOneCoin)) {
                     // ignore: avoid_print
                     print("adding 1 coin...");
-                    // TODO: add 1 coin
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 1).toString());
 
@@ -164,6 +167,8 @@ class _PlayQuizState extends State<PlayQuiz> {
                     databaseService.addUserCoins(
                         coinsMap, currentUser.email.toString());
                   }
+
+                  endOfQuizAd.show();
 
                   Navigator.pushReplacement(
                       context,
@@ -230,7 +235,6 @@ class _PlayQuizState extends State<PlayQuiz> {
                 } else {
                   // TODO: generify this with the points map for each pack
                   if (_correctAnswers >= 8) {
-                    // TODO: unlock next
                     // ignore: avoid_print
                     print("unlocking next...");
                     unlockedQuizzesProvider.setNumOfUnlockedQuizzes(
@@ -238,7 +242,6 @@ class _PlayQuizState extends State<PlayQuiz> {
                   }
 
                   if (_correctAnswers == 9) {
-                    // TODO: add 1 coin
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 1).toString());
 
@@ -253,7 +256,6 @@ class _PlayQuizState extends State<PlayQuiz> {
                   }
 
                   if (_correctAnswers == 10) {
-                    // TODO: add 3 coins
                     final currentPointsInt = int.parse(coinsProvider.coins);
                     coinsProvider.setCoins((currentPointsInt + 3).toString());
 
@@ -475,9 +477,3 @@ class _QuestionTileState extends State<QuestionTile> {
     );
   }
 }
-
-// // TODO: this can be done in the db service
-// List<QueryDocumentSnapshot> sortByDate(List<QueryDocumentSnapshot> docs) {
-//   docs.sort((a, b) => a["date"].compareTo(b["date"]));
-//   return docs;
-// }

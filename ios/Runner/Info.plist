@@ -12,6 +12,8 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>quizapp</string>
+	<key>GADApplicationIdentifier</key>
+    <string>ca-app-pub-4062966075408687/7213562842</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
