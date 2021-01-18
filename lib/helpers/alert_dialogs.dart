@@ -1,3 +1,4 @@
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +8,16 @@ import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/play_quiz.dart';
 
 Future<void> watchAdForCoinsDialog(BuildContext context) async {
+
+  RewardedVideoAd.instance.load(adUnitId: RewardedVideoAd.testAdUnitId);
+  RewardedVideoAd.instance.listener =
+      (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
+    print('Rewarded event: $event');
+    if (event == RewardedVideoAdEvent.rewarded) {
+      print("hola");
+    }
+  };
+
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -49,6 +60,7 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
 
               // ignore: avoid_print
               print("watching ad...");
+              await RewardedVideoAd.instance.show();
               Navigator.of(context).pop();
             },
             child: const Text('Yes'),
@@ -121,8 +133,10 @@ Future<void> payCoinAndPlayQuizDialog(
                 databaseService.addUserCoins(
                     coinsMap, currentUser.email.toString());
 
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => PlayQuiz(quizId, quizIndex)));
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PlayQuiz(quizId, quizIndex)));
               }
             },
             child: const Text('Yes'),

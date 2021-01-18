@@ -28,6 +28,7 @@ class AdMobService {
     return InterstitialAd(
       adUnitId: getInterstitialAdId(),
       listener: (MobileAdEvent event) {
+        // ignore: avoid_print
         print("InterstitialAd event is $event");
       },
     );
