@@ -39,14 +39,14 @@ class _OptionTileState extends State<OptionTile> {
                   style: TextStyle(
                       color: widget.selectedOption == widget.label
                           ? MAIN_COLOR
-                          : Colors.black54)),
+                          : Colors.white)),
             ),
             const SizedBox(
               width: 8,
             ),
             Flexible(
               child: Text(widget.label,
-                  style: const TextStyle(fontSize: 16, color: Colors.black54)),
+                  style: const TextStyle(fontSize: 16, color: Colors.white)),
             )
           ],
         ));

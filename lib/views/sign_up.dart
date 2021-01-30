@@ -87,6 +87,8 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      backgroundColor: SECONDARY_COLOR,
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
@@ -130,6 +132,8 @@ class _SignUpState extends State<SignUp> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.white,
+                      style: const TextStyle(color: Colors.white),
                       validator: (value) {
                         if (_isEmailAlreadyInUse) {
                           return "Email address already in use.";
@@ -152,6 +156,12 @@ class _SignUpState extends State<SignUp> {
                       },
                       decoration: const InputDecoration(
                         hintText: "Email",
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -162,6 +172,8 @@ class _SignUpState extends State<SignUp> {
                     ),
                     const SizedBox(height: 6),
                     TextFormField(
+                      cursorColor: Colors.white,
+                      style: const TextStyle(color: Colors.white),
                       obscureText: true,
                       validator: (value) {
                         if (value.isEmpty) {
@@ -175,7 +187,13 @@ class _SignUpState extends State<SignUp> {
                         return null;
                       },
                       decoration: const InputDecoration(
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                        ),
                         hintText: "Password",
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -208,6 +226,7 @@ class _SignUpState extends State<SignUp> {
                         const Text("Already have an account? ",
                             style: TextStyle(
                               fontSize: 16,
+                              color: Colors.white
                             )),
                         GestureDetector(
                           onTap: () {
@@ -219,6 +238,7 @@ class _SignUpState extends State<SignUp> {
                           child: const Text("Click here.",
                               style: TextStyle(
                                   fontSize: 16,
+                                  color: Colors.white,
                                   decoration: TextDecoration.underline)),
                         )
                       ],

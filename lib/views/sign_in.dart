@@ -134,8 +134,8 @@ class _SignInState extends State<SignIn> {
                   children: [
                     const Spacer(),
                     TextFormField(
-                      cursorColor: MAIN_COLOR,
-                      style: const TextStyle(color: MAIN_COLOR),
+                      cursorColor: Colors.white,
+                      style: const TextStyle(color: Colors.white),
                       validator: (value) {
                         if (value.isEmpty) {
                           return "Please enter email address.";
@@ -169,8 +169,8 @@ class _SignInState extends State<SignIn> {
                     ),
                     const SizedBox(height: 6),
                     TextFormField(
-                      cursorColor: MAIN_COLOR,
-                      style: const TextStyle(color: MAIN_COLOR),
+                      cursorColor: Colors.white,
+                      style: const TextStyle(color: Colors.white),
                       obscureText: true,
                       validator: (value) {
                         if (value.isEmpty) {

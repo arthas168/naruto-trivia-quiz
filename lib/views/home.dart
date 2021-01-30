@@ -63,6 +63,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SECONDARY_COLOR,
         appBar: AppBar(
             leading: Coins(),
             title: appBar(context),
@@ -90,13 +91,14 @@ class Coins extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         child: Row(
           children: [
-            Text(coinsProvider.coins, style: const TextStyle(fontSize: 18)),
+            Text(coinsProvider.coins, style: const TextStyle(fontSize: 18, color: SECONDARY_COLOR)),
             const SizedBox(
               width: 2.5,
             ),
             const FaIcon(
               FontAwesomeIcons.coins,
               size: 18,
+              color: SECONDARY_COLOR
             )
           ],
         ),
@@ -145,7 +147,7 @@ class QuizTile extends StatelessWidget {
                       Text(
                         title,
                         style: const TextStyle(
-                            color: Colors.white,
+                            color: SECONDARY_COLOR,
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),
