@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quizapp/services/database.dart';
 
-class CoinsProvider with ChangeNotifier{
+class CoinsProvider with ChangeNotifier {
   String _coins;
   DatabaseService databaseService = DatabaseService();
 
-  CoinsProvider(){
+  CoinsProvider() {
     _coins = "5";
     load();
   }
@@ -21,7 +21,7 @@ class CoinsProvider with ChangeNotifier{
   load() async {
     final res = await databaseService.getCoinsData();
 
-    if(res.data()!=null) {
+    if (res.data() != null) {
       setCoins(res.data()["coins"].toString());
     }
   }

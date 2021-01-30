@@ -122,8 +122,7 @@ class _SignUpState extends State<SignUp> {
                       decoration: const InputDecoration(
                         hintText: "Name",
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: MAIN_COLOR, width: 2.0),
+                          borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
                       ),
                       onChanged: (val) {
@@ -154,8 +153,7 @@ class _SignUpState extends State<SignUp> {
                       decoration: const InputDecoration(
                         hintText: "Email",
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: MAIN_COLOR, width: 2.0),
+                          borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
                       ),
                       onChanged: (val) {
@@ -179,8 +177,7 @@ class _SignUpState extends State<SignUp> {
                       decoration: const InputDecoration(
                         hintText: "Password",
                         focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: MAIN_COLOR, width: 2.0),
+                          borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
                       ),
                       onChanged: (val) {

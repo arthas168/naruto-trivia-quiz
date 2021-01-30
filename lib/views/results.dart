@@ -21,7 +21,6 @@ class Results extends StatefulWidget {
 class _ResultsState extends State<Results> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
         appBar: AppBar(
             title: appBar(context),
@@ -51,8 +50,8 @@ class _ResultsState extends State<Results> {
                 const SizedBox(height: 30),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => Home()));
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Home()));
                     },
                     child: const Text(
                       "Go back to Home",

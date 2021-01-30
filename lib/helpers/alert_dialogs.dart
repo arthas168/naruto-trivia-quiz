@@ -8,7 +8,6 @@ import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/play_quiz.dart';
 
 Future<void> watchAdForCoinsDialog(BuildContext context) async {
-
   RewardedVideoAd.instance
       .load(adUnitId: "ca-app-pub-4062966075408687/7213562842");
 

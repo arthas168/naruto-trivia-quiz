@@ -31,11 +31,16 @@ class _HomeState extends State<Home> {
           return snapshot.data == null
               ? Container()
               : ListView.builder(
-                  itemCount: int.parse(snapshot.data.documents.length.toString()),
+                  itemCount:
+                      int.parse(snapshot.data.documents.length.toString()),
                   itemBuilder: (context, index) {
                     return QuizTile(
-                        title: snapshot.data.documents[index].data()["title"].toString(),
-                        quizId: snapshot.data.documents[index].data()["quizId"].toString(),
+                        title: snapshot.data.documents[index]
+                            .data()["title"]
+                            .toString(),
+                        quizId: snapshot.data.documents[index]
+                            .data()["quizId"]
+                            .toString(),
                         index: index);
                   });
         },
@@ -109,7 +114,8 @@ class QuizTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
+    final unlockedQuizzesProvider =
+        Provider.of<UnlockedQuizzesProvider>(context);
 
     return GestureDetector(
       onTap: () {
