@@ -41,7 +41,7 @@ final Map<String, String> points = {
   //  Preliminary round
   "9515802294049839": "8,10,12",
 
-  // Training
+  // Training 1
   "sttgmp6ucdoorrqf": "8,9,10",
 
   // Training with Jiraya
@@ -57,5 +57,69 @@ final Map<String, String> points = {
   "s4mvc9Xvab8peHaq": "8,9,10",
 
   // Orochimaru & the third hokage
-  "Z3tmgSNV0WZv7BFI": "8,9,10"
+  "Z3tmgSNV0WZv7BFI": "8,9,10",
+
+  // The mission
+  "TJP51U4122B458VC": "8,9,10",
+
+  // Sasuke and the sand shinobies
+  "CQ81H3HAKs85X8RK": "6,7,8",
+
+
+  // Naruto vs Gaara
+  "jJauPu9qrww6DlFf": "10,11,12",
+
+  // What's next for Konoha
+  "04Q8693IW3N92Ku6": "3,4,5",
+
+  // The Akatsuki
+  "8663Z4m5GcK1082C": "8,9,10",
+
+  // Sasuke and Itachi
+  "Gn919UmkBgk5rCUj": "8,9,10",
+
+  // Training 2
+  "HBf4Z25B3QgI2MZd": "4,5,6",
+
+  // Tsunade
+  "F1964545q1599696": "8,9,10",
+
+  // Battles
+  "DRkvwEdzV5EL2mNT": "10,11,12",
+
+  // Tsunade's decision
+  "704235529K4257K7": "8,9,10",
+
+  // Konoha
+  "U8199608030L2DL7": "8,9,10",
+
+  // Sasuke's behaviour
+  "184g8sPlazusNd25": "8,9,10",
+
+  // The rescue team
+  "yeYxOtfTpIw3sgLp": "8,9,10",
+
+  // First fight
+  "1eVSmN679lZSy1a6": "6,7,8",
+
+  // Second fight
+  "102062p299xZz183": "4,5,6",
+
+  // Three battles
+  "Uf2IKWMl2S5AjzTY": "11,12,13",
+
+  // The Allies
+  "1218849483214821": "6,7,8",
+
+  // Kimmimaro
+  "RIyCT3FyGRgn9U3M": "6,7,8",
+
+  // Naruto vs Sasuke
+  "43p3R1388L2733EL": "8,9,10",
+
+  // The Ending
+  "8A814666231239y9": "8,9,10",
+
+  // Mission failed
+  "DVALBJZyBRCFXvCG": "8,9,10",
 };
