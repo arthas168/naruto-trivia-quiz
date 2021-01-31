@@ -67,10 +67,8 @@ class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: SECONDARY_COLOR,
           onPressed: () async {
-            await Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => SeasonsList()));
+            await Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => SeasonsList()));
           },
           child: const Icon(Icons.arrow_back),
         ),
