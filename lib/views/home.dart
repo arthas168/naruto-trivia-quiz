@@ -147,7 +147,7 @@ class QuizTile extends StatelessWidget {
                           title,
                           style: const TextStyle(
                               color: SECONDARY_COLOR,
-                              fontSize: 24,
+                              fontSize: 19,
                               fontWeight: FontWeight.w600),
                         )
                       else
