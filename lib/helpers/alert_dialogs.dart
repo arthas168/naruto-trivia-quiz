@@ -8,9 +8,8 @@ import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/play_quiz.dart';
 
 Future<void> watchAdForCoinsDialog(BuildContext context) async {
-
   RewardedVideoAd.instance
-      .load(adUnitId: "ca-app-pub-4062966075408687/7213562842");
+      .load(adUnitId: "ca-app-pub-4062966075408687/6793942204");
 
   return showDialog<void>(
     context: context,
@@ -33,7 +32,7 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
             // ignore: prefer_const_literals_to_create_immutables
             children: <Widget>[
               const Text(
-                  'Do you want to watch one ad (30 seconds) and get 1 coin?'),
+                  'Do you want to watch one ad and get 1 coin?'),
             ],
           ),
         ),

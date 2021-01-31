@@ -90,6 +90,7 @@ class _PlayQuizState extends State<PlayQuiz> {
     endOfQuizAd.load();
 
     return Scaffold(
+      backgroundColor: SECONDARY_COLOR,
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
@@ -184,7 +185,7 @@ class _PlayQuizState extends State<PlayQuiz> {
               minWidth: 100,
               height: 50,
               child: Text(currentIndex + 1 != totalAnswers ? "Next" : "Finish",
-                  style: const TextStyle(fontSize: 18)),
+                  style: const TextStyle(fontSize: 18, color: SECONDARY_COLOR)),
             ),
             CircularCountDownTimer(
               // Countdown duration in Seconds
@@ -202,10 +203,10 @@ class _PlayQuizState extends State<PlayQuiz> {
               height: MediaQuery.of(context).size.height / 4,
 
               // Default Color for Countdown Timer
-              color: Colors.white,
+              color: SECONDARY_COLOR,
 
               // Filling Color for Countdown Timer
-              fillColor: Colors.red,
+              fillColor: MAIN_COLOR,
 
               // Border Thickness of the Countdown Circle
               strokeWidth: 5.0,
@@ -216,7 +217,7 @@ class _PlayQuizState extends State<PlayQuiz> {
               // Text Style for Countdown Text
               textStyle: const TextStyle(
                   fontSize: 16.0,
-                  color: Colors.black,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold),
 
               // true for reverse countdown (max to 0), false for forward countdown (0 to max)
@@ -309,9 +310,10 @@ class _QuestionTileState extends State<QuestionTile> {
         ),
         Text(
           widget.questionModel.question,
+          textAlign: TextAlign.center,
           style: const TextStyle(
             fontSize: 18,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
         const SizedBox(

@@ -54,7 +54,8 @@ class _AppState extends State<App> {
             child: ChangeNotifierProvider(
               create: (BuildContext context) => CoinsProvider(),
               child: MaterialApp(
-                  home: (isUserLoggedIn ?? false) ? Home() : SignIn()),
+                // todo: disable
+                  home: Home()),
             ),
           );
         }

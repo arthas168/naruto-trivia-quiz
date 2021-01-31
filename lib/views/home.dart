@@ -31,11 +31,16 @@ class _HomeState extends State<Home> {
           return snapshot.data == null
               ? Container()
               : ListView.builder(
-                  itemCount: int.parse(snapshot.data.documents.length.toString()),
+                  itemCount:
+                      int.parse(snapshot.data.documents.length.toString()),
                   itemBuilder: (context, index) {
                     return QuizTile(
-                        title: snapshot.data.documents[index].data()["title"].toString(),
-                        quizId: snapshot.data.documents[index].data()["quizId"].toString(),
+                        title: snapshot.data.documents[index]
+                            .data()["title"]
+                            .toString(),
+                        quizId: snapshot.data.documents[index]
+                            .data()["quizId"]
+                            .toString(),
                         index: index);
                   });
         },
@@ -58,6 +63,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SECONDARY_COLOR,
         appBar: AppBar(
             leading: Coins(),
             title: appBar(context),
@@ -85,13 +91,14 @@ class Coins extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         child: Row(
           children: [
-            Text(coinsProvider.coins, style: const TextStyle(fontSize: 18)),
+            Text(coinsProvider.coins, style: const TextStyle(fontSize: 18, color: SECONDARY_COLOR)),
             const SizedBox(
               width: 2.5,
             ),
             const FaIcon(
               FontAwesomeIcons.coins,
               size: 18,
+              color: SECONDARY_COLOR
             )
           ],
         ),
@@ -109,7 +116,8 @@ class QuizTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final unlockedQuizzesProvider = Provider.of<UnlockedQuizzesProvider>(context);
+    final unlockedQuizzesProvider =
+        Provider.of<UnlockedQuizzesProvider>(context);
 
     return GestureDetector(
       onTap: () {
@@ -139,7 +147,7 @@ class QuizTile extends StatelessWidget {
                       Text(
                         title,
                         style: const TextStyle(
-                            color: Colors.white,
+                            color: SECONDARY_COLOR,
                             fontSize: 20,
                             fontWeight: FontWeight.w600),
                       ),

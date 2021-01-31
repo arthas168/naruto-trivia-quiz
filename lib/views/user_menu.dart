@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/views/sign_in.dart';
 
@@ -10,6 +11,7 @@ class UserMenuActions extends StatelessWidget {
       icon: const Icon(
         Icons.settings,
         size: 26.0,
+        color: SECONDARY_COLOR
       ),
       // ignore: avoid_print
       onSelected: (value) => {print("value $value")},

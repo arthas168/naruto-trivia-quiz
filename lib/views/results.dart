@@ -21,8 +21,8 @@ class Results extends StatefulWidget {
 class _ResultsState extends State<Results> {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
+      backgroundColor: SECONDARY_COLOR,
         appBar: AppBar(
             title: appBar(context),
             centerTitle: true,
@@ -44,15 +44,15 @@ class _ResultsState extends State<Results> {
                   alignment: Alignment.center,
                   child: Text(
                     "You answered ${widget.correct} answers correctly and ${widget.incorrect} answers incorrectly. \n${widget.total - (widget.correct + widget.incorrect)} questions left unanswered.",
-                    style: const TextStyle(fontSize: 16),
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(height: 30),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(
-                          context, MaterialPageRoute(builder: (context) => Home()));
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => Home()));
                     },
                     child: const Text(
                       "Go back to Home",

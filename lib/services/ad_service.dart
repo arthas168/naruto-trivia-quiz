@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_admob/firebase_admob.dart';
 
 class AdMobService {
-
   String getAdMobAppId() {
     if (Platform.isIOS) {
       return 'ca-app-pub-4062966075408687~5090155904';
@@ -22,7 +21,6 @@ class AdMobService {
     }
     return null;
   }
-
 
   InterstitialAd endOfQuizAd() {
     return InterstitialAd(

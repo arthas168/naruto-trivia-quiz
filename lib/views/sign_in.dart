@@ -113,6 +113,7 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SECONDARY_COLOR,
       appBar: AppBar(
           title: appBar(context),
           centerTitle: true,
@@ -133,6 +134,8 @@ class _SignInState extends State<SignIn> {
                   children: [
                     const Spacer(),
                     TextFormField(
+                      cursorColor: Colors.white,
+                      style: const TextStyle(color: Colors.white),
                       validator: (value) {
                         if (value.isEmpty) {
                           return "Please enter email address.";
@@ -150,6 +153,12 @@ class _SignInState extends State<SignIn> {
                       },
                       decoration: const InputDecoration(
                         hintText: "Email",
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white)
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -160,6 +169,8 @@ class _SignInState extends State<SignIn> {
                     ),
                     const SizedBox(height: 6),
                     TextFormField(
+                      cursorColor: Colors.white,
+                      style: const TextStyle(color: Colors.white),
                       obscureText: true,
                       validator: (value) {
                         if (value.isEmpty) {
@@ -173,7 +184,13 @@ class _SignInState extends State<SignIn> {
                         return null;
                       },
                       decoration: const InputDecoration(
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                        ),
                         hintText: "Password",
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white)
+                        ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -197,16 +214,14 @@ class _SignInState extends State<SignIn> {
                           alignment: Alignment.center,
                           child: const Text("Sign In",
                               style: TextStyle(
-                                  color: Colors.white, fontSize: 16))),
+                                  color: SECONDARY_COLOR, fontSize: 16))),
                     ),
                     const SizedBox(height: 18),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Don't have an account? ",
-                            style: TextStyle(
-                              fontSize: 16,
-                            )),
+                            style: TextStyle(fontSize: 16, color: Colors.white)),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(
@@ -216,6 +231,7 @@ class _SignInState extends State<SignIn> {
                           },
                           child: const Text("Click here.",
                               style: TextStyle(
+                                  color: Colors.white,
                                   fontSize: 16,
                                   decoration: TextDecoration.underline)),
                         )

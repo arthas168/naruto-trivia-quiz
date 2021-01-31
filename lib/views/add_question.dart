@@ -86,8 +86,8 @@ class _AddQuestionState extends State<AddQuestion> {
                           decoration: const InputDecoration(
                             hintText: "Question",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: MAIN_COLOR, width: 2.0),
+                              borderSide:
+                                  BorderSide(color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
                           onChanged: (val) {
@@ -108,8 +108,8 @@ class _AddQuestionState extends State<AddQuestion> {
                           decoration: const InputDecoration(
                             hintText: "Option 1 (Correct Answer)",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: MAIN_COLOR, width: 2.0),
+                              borderSide:
+                                  BorderSide(color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
                           onChanged: (val) {
@@ -130,8 +130,8 @@ class _AddQuestionState extends State<AddQuestion> {
                           decoration: const InputDecoration(
                             hintText: "Option 2",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: MAIN_COLOR, width: 2.0),
+                              borderSide:
+                                  BorderSide(color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
                           onChanged: (val) {
@@ -152,8 +152,8 @@ class _AddQuestionState extends State<AddQuestion> {
                           decoration: const InputDecoration(
                             hintText: "Option 3",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: MAIN_COLOR, width: 2.0),
+                              borderSide:
+                                  BorderSide(color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
                           onChanged: (val) {
@@ -174,8 +174,8 @@ class _AddQuestionState extends State<AddQuestion> {
                           decoration: const InputDecoration(
                             hintText: "Option 4",
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: MAIN_COLOR, width: 2.0),
+                              borderSide:
+                                  BorderSide(color: MAIN_COLOR, width: 2.0),
                             ),
                           ),
                           onChanged: (val) {
