@@ -63,6 +63,21 @@ class DatabaseService {
     });
   }
 
+  Future<void> addUserMaxedOutQuizzes(
+      Map<String, String> maxedOutData) async {
+    final user = await getCurrentUser();
+    final email = user.email.toString();
+
+    await FirebaseFirestore.instance
+        .collection("UserMaxedOutQuizzes")
+        .doc(email)
+        .set(maxedOutData)
+        .catchError((e) {
+      // ignore: avoid_print
+      print(e.toString());
+    });
+  }
+
   Future<void> addAvailableQuizzes(Map<String, int> quizzesData) async {
     final user = await getCurrentUser();
     final email = user.email.toString();
@@ -97,6 +112,16 @@ class DatabaseService {
 
     return FirebaseFirestore.instance
         .collection("UserCoins")
+        .doc(user.email.toString())
+        .get();
+  }
+
+  // ignore: always_declare_return_types, type_annotate_public_apis
+  getUserMaxedOutQuizzes() async {
+    final user = await getCurrentUser();
+
+    return FirebaseFirestore.instance
+        .collection("UserMaxedOutQuizzes")
         .doc(user.email.toString())
         .get();
   }

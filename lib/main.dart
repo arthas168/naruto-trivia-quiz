@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/providers/coins_provider.dart';
+import 'package:quizapp/providers/maxed_out_quizzes_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/ad_service.dart';
-import 'package:quizapp/views/quiz_list_season_one.dart';
 import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/views/sign_in.dart';
 
@@ -51,12 +51,15 @@ class _AppState extends State<App> {
         // Once complete, show your application
         if (snapshot.connectionState == ConnectionState.done) {
           return ChangeNotifierProvider(
-            create: (BuildContext context) => UnlockedQuizzesProvider(),
+            create: (BuildContext context) => MaxedOutQuizzesProvider(),
             child: ChangeNotifierProvider(
-              create: (BuildContext context) => CoinsProvider(),
-              child: MaterialApp(
-                  // todo: disable
-                  home: SeasonsList()),
+              create: (BuildContext context) => UnlockedQuizzesProvider(),
+              child: ChangeNotifierProvider(
+                create: (BuildContext context) => CoinsProvider(),
+                child: MaterialApp(
+                    // todo: disable
+                    home: SeasonsList()),
+              ),
             ),
           );
         }

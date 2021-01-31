@@ -7,6 +7,7 @@ import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/points.dart';
 import 'package:quizapp/models/question_model.dart';
 import 'package:quizapp/providers/coins_provider.dart';
+import 'package:quizapp/providers/maxed_out_quizzes_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/ad_service.dart';
 import 'package:quizapp/services/database.dart';
@@ -82,6 +83,8 @@ class _PlayQuizState extends State<PlayQuiz> {
     final coinsProvider = Provider.of<CoinsProvider>(context);
     final unlockedQuizzesProvider =
         Provider.of<UnlockedQuizzesProvider>(context);
+    final maxedOutQuizzesProvider =
+        Provider.of<MaxedOutQuizzesProvider>(context);
 
     final DatabaseService databaseService = DatabaseService();
     final CountDownController _controller = CountDownController();
@@ -155,18 +158,30 @@ class _PlayQuizState extends State<PlayQuiz> {
 
                   if (_correctAnswers == int.parse(pointsToGetThreeCoins)) {
                     // ignore: avoid_print
-                    print("adding 3 coins...");
-                    final currentPointsInt = int.parse(coinsProvider.coins);
-                    coinsProvider.setCoins((currentPointsInt + 3).toString());
 
-                    final Map<String, String> coinsMap = {
-                      "coins": coinsProvider.coins,
-                    };
 
                     final currentUser = await databaseService.getCurrentUser();
 
-                    databaseService.addUserCoins(
-                        coinsMap, currentUser.email.toString());
+                    var maxedOutCurrent =
+                        maxedOutQuizzesProvider.maxedOutQuizzes;
+
+                    if(!maxedOutCurrent.contains(widget.quizId)) {
+
+                      print("adding 3 coins...");
+                      final currentPointsInt = int.parse(coinsProvider.coins);
+                      coinsProvider.setCoins((currentPointsInt + 3).toString());
+
+                      final Map<String, String> coinsMap = {
+                        "coins": coinsProvider.coins,
+                      };
+
+                      maxedOutCurrent += ",${widget.quizId}";
+
+                      maxedOutQuizzesProvider.setMaxedOutQuizzes(maxedOutCurrent);
+
+                      databaseService.addUserCoins(
+                          coinsMap, currentUser.email.toString());
+                    }
                   }
 
                   endOfQuizAd.show();

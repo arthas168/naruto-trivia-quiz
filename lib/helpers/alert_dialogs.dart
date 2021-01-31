@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:quizapp/providers/coins_provider.dart';
+import 'package:quizapp/providers/maxed_out_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/play_quiz.dart';
 
@@ -76,7 +77,11 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
 }
 
 Future<void> payCoinAndPlayQuizDialog(
-    BuildContext context, String quizId, int quizIndex) async {
+    // ignore: avoid_positional_boolean_parameters
+    BuildContext context, String quizId, int quizIndex, String maxedOutQuizzes) async {
+
+    final bool isQuizMaxedOut = maxedOutQuizzes.contains(quizId);
+
   return showDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -87,23 +92,40 @@ Future<void> payCoinAndPlayQuizDialog(
       return AlertDialog(
         // ignore: prefer_const_literals_to_create_immutables
         title: Row(children: [
-          const Text('Play quiz for 1 '),
-          const FaIcon(
+          Text(!isQuizMaxedOut
+              ? 'Play quiz for 1 '
+              : "Attention"),
+          if (!isQuizMaxedOut) const FaIcon(
             FontAwesomeIcons.coins,
             size: 16,
-          ),
+          ) else const SizedBox(),
         ]),
         content: SingleChildScrollView(
           child: ListBody(
             // ignore: prefer_const_literals_to_create_immutables
             children: <Widget>[
-              const Text('Do you want to pay 1 coin and start the quiz now?'),
+              Text(!isQuizMaxedOut
+                  ? 'Do you want to pay 1 coin and start the quiz now?'
+                  : "You have already completed this quiz 100% correctly. You can still play, it won't cost you coins and you can't earn coins from it. Proceed?"),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () async {
+              if(isQuizMaxedOut) {
+                // ignore: avoid_print
+                print("Maxed out...");
+                // ignore: avoid_print
+                print("loading quiz...");
+                Navigator.of(context).pop();
+                await Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PlayQuiz(quizId, quizIndex)));
+
+              }
+
               if (coinsProvider.coins == "0") {
                 Fluttertoast.showToast(
                     msg:

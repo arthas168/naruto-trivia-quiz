@@ -6,6 +6,7 @@ import 'package:quizapp/helpers/alert_dialogs.dart';
 import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/naruto_icons.dart';
 import 'package:quizapp/providers/coins_provider.dart';
+import 'package:quizapp/providers/maxed_out_quizzes_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/seasons_list.dart';
@@ -98,26 +99,27 @@ class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
     print(_unlockedQuizzes);
 
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: SECONDARY_COLOR,
-          onPressed: () async {
-            await Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => SeasonsList()));
-          },
-          child: const Icon(Icons.arrow_back),
-        ),
+      floatingActionButton: FloatingActionButton(
         backgroundColor: SECONDARY_COLOR,
-        appBar: AppBar(
-            leading: Coins(),
-            title: appBar(context),
-            actions: [
-              UserMenuActions(),
-            ],
-            centerTitle: true,
-            backgroundColor: MAIN_COLOR,
-            elevation: 0,
-            brightness: Brightness.light),
-        body: quizList());
+        onPressed: () async {
+          await Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => SeasonsList()));
+        },
+        child: const Icon(Icons.arrow_back),
+      ),
+      backgroundColor: SECONDARY_COLOR,
+      appBar: AppBar(
+          leading: Coins(),
+          title: appBar(context),
+          actions: [
+            UserMenuActions(),
+          ],
+          centerTitle: true,
+          backgroundColor: MAIN_COLOR,
+          elevation: 0,
+          brightness: Brightness.light),
+      body: quizList(),
+    );
   }
 
   Future _scrollToIndex() async {
@@ -165,10 +167,12 @@ class QuizTile extends StatelessWidget {
     final unlockedQuizzesProvider =
         Provider.of<UnlockedQuizzesProvider>(context);
 
+    final maxedOutQuizzesProvider = Provider.of<MaxedOutQuizzesProvider>(context);
+
     return GestureDetector(
       onTap: () {
         if (unlockedQuizzesProvider.numOfUnlockedQuizzes > index) {
-          payCoinAndPlayQuizDialog(context, quizId, index);
+          payCoinAndPlayQuizDialog(context, quizId, index, maxedOutQuizzesProvider.maxedOutQuizzes);
         }
       },
       child: Container(
