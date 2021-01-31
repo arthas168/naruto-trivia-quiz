@@ -87,7 +87,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: SECONDARY_COLOR,
       appBar: AppBar(
           title: appBar(context),
@@ -160,8 +159,7 @@ class _SignUpState extends State<SignUp> {
                           color: Colors.white,
                         ),
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)
-                        ),
+                            borderSide: BorderSide(color: Colors.white)),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -192,8 +190,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                         hintText: "Password",
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)
-                        ),
+                            borderSide: BorderSide(color: Colors.white)),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -224,10 +221,8 @@ class _SignUpState extends State<SignUp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Already have an account? ",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white
-                            )),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.white)),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(

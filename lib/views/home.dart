@@ -1,10 +1,10 @@
-import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:quizapp/helpers/alert_dialogs.dart';
 import 'package:quizapp/helpers/constants.dart';
+import 'package:quizapp/helpers/naruto_icons.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SECONDARY_COLOR,
+        backgroundColor: SECONDARY_COLOR,
         appBar: AppBar(
             leading: Coins(),
             title: appBar(context),
@@ -91,15 +91,13 @@ class Coins extends StatelessWidget {
         padding: const EdgeInsets.all(6),
         child: Row(
           children: [
-            Text(coinsProvider.coins, style: const TextStyle(fontSize: 18, color: SECONDARY_COLOR)),
+            Text(coinsProvider.coins,
+                style: const TextStyle(fontSize: 18, color: SECONDARY_COLOR)),
             const SizedBox(
               width: 2.5,
             ),
-            const FaIcon(
-              FontAwesomeIcons.coins,
-              size: 18,
-              color: SECONDARY_COLOR
-            )
+            const FaIcon(FontAwesomeIcons.coins,
+                size: 18, color: SECONDARY_COLOR)
           ],
         ),
       ),
@@ -144,13 +142,16 @@ class QuizTile extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                            color: SECONDARY_COLOR,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600),
-                      ),
+                      if (unlockedQuizzesProvider.numOfUnlockedQuizzes > index)
+                        Text(
+                          title,
+                          style: const TextStyle(
+                              color: SECONDARY_COLOR,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600),
+                        )
+                      else
+                        const Icon(Naruto.seal_5150534, size: 55),
                       const SizedBox(height: 5),
                     ],
                   ))

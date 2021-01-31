@@ -31,8 +31,7 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
           child: ListBody(
             // ignore: prefer_const_literals_to_create_immutables
             children: <Widget>[
-              const Text(
-                  'Do you want to watch one ad and get 1 coin?'),
+              const Text('Do you want to watch one ad and get 1 coin?'),
             ],
           ),
         ),
@@ -48,7 +47,8 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
               // ignore: avoid_print
               print("watching ad...");
               RewardedVideoAd.instance.listener = (RewardedVideoAdEvent event,
-                  {String rewardType, int rewardAmount}) {
+                  {String rewardType, int rewardAmount}) async {
+                // ignore: avoid_print
                 print('Rewarded event: $event');
                 if (event == RewardedVideoAdEvent.rewarded) {
                   databaseService.addUserCoins(
@@ -57,9 +57,11 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
                   coinsProvider.setCoins(
                       (int.parse(coinsProvider.coins) + 1).toString());
                 }
+
+
               };
-              await RewardedVideoAd.instance.show();
-              Navigator.of(context).pop();
+              
+
             },
             child: const Text('Yes'),
           ),

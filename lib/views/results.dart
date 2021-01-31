@@ -22,7 +22,7 @@ class _ResultsState extends State<Results> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SECONDARY_COLOR,
+        backgroundColor: SECONDARY_COLOR,
         appBar: AppBar(
             title: appBar(context),
             centerTitle: true,

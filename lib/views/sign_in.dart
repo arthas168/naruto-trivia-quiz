@@ -157,8 +157,7 @@ class _SignInState extends State<SignIn> {
                           color: Colors.white,
                         ),
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white)
-                        ),
+                            borderSide: BorderSide(color: Colors.white)),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -189,8 +188,7 @@ class _SignInState extends State<SignIn> {
                         ),
                         hintText: "Password",
                         enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white)
-                        ),
+                            borderSide: BorderSide(color: Colors.white)),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: MAIN_COLOR, width: 2.0),
                         ),
@@ -221,7 +219,8 @@ class _SignInState extends State<SignIn> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text("Don't have an account? ",
-                            style: TextStyle(fontSize: 16, color: Colors.white)),
+                            style:
+                                TextStyle(fontSize: 16, color: Colors.white)),
                         GestureDetector(
                           onTap: () {
                             Navigator.pushReplacement(

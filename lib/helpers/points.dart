@@ -29,7 +29,7 @@ final Map<String, String> points = {
   // The competition
   "35r7858759751279": "8,9,10",
 
-  // The Nine Genis
+  // The Nine Genins
   "4983351477411795": "8,9,10",
 
   // Chunin exams part 2

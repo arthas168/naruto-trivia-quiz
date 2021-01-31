@@ -8,11 +8,7 @@ class UserMenuActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton(
-      icon: const Icon(
-        Icons.settings,
-        size: 26.0,
-        color: SECONDARY_COLOR
-      ),
+      icon: const Icon(Icons.settings, size: 26.0, color: SECONDARY_COLOR),
       // ignore: avoid_print
       onSelected: (value) => {print("value $value")},
       itemBuilder: (context) => <PopupMenuEntry<String>>[
