@@ -58,6 +58,7 @@ class _AppState extends State<App> {
                 create: (BuildContext context) => CoinsProvider(),
                 child: MaterialApp(
                     // todo: disable
+                    // home: (isUserLoggedIn ?? false) ? Home() : SignIn()),
                     home: SeasonsList()),
               ),
             ),

@@ -60,7 +60,8 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
                 }
               };
 
-              // TODO: init watching
+              await RewardedVideoAd.instance.show();
+              Navigator.of(context).pop();
             },
             child: const Text('Yes'),
           ),
