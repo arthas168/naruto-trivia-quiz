@@ -15,23 +15,24 @@ import 'package:quizapp/widgets/widgets.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
 // ignore: must_be_immutable
-class QuizListSeasonOne extends StatefulWidget {
+class QuizListSeasonTwo extends StatefulWidget {
   int _unlockedQuizzes;
-  QuizListSeasonOne({int unlockedQuizzes}) {
+  QuizListSeasonTwo({int unlockedQuizzes}) {
     _unlockedQuizzes = unlockedQuizzes;
   }
 
   @override
   // ignore: no_logic_in_create_state
-  _QuizListSeasonOneState createState() =>
-      _QuizListSeasonOneState(unlockedQuizzes: _unlockedQuizzes);
+  _QuizListSeasonTwoState createState() =>
+      // ignore: no_logic_in_create_state
+      _QuizListSeasonTwoState(unlockedQuizzes: _unlockedQuizzes);
 }
 
-class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
+class _QuizListSeasonTwoState extends State<QuizListSeasonTwo> {
   Stream quizStream;
   int _unlockedQuizzes;
 
-  _QuizListSeasonOneState({int unlockedQuizzes}) {
+  _QuizListSeasonTwoState({int unlockedQuizzes}) {
     _unlockedQuizzes = unlockedQuizzes;
   }
 
@@ -78,7 +79,7 @@ class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
 
   @override
   void initState() {
-    databaseService.getQuizData().then((val) {
+    databaseService.getQuizSeasonTwoData().then((val) {
       setState(() {
         quizStream = val;
         // preferences = await SharedPreferences.getInstance();

@@ -63,8 +63,7 @@ class DatabaseService {
     });
   }
 
-  Future<void> addUserMaxedOutQuizzes(
-      Map<String, String> maxedOutData) async {
+  Future<void> addUserMaxedOutQuizzes(Map<String, String> maxedOutData) async {
     final user = await getCurrentUser();
     final email = user.email.toString();
 

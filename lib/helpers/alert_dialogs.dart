@@ -77,10 +77,14 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
 }
 
 Future<void> payCoinAndPlayQuizDialog(
-    // ignore: avoid_positional_boolean_parameters
-    BuildContext context, String quizId, int quizIndex, String maxedOutQuizzes) async {
-
-    final bool isQuizMaxedOut = maxedOutQuizzes.contains(quizId);
+  // ignore: avoid_positional_boolean_parameters
+  BuildContext context,
+  String quizId,
+  int quizIndex,
+  String maxedOutQuizzes,
+  String quizTitle,
+) async {
+  final bool isQuizMaxedOut = maxedOutQuizzes.contains(quizId);
 
   return showDialog<void>(
     context: context,
@@ -92,13 +96,14 @@ Future<void> payCoinAndPlayQuizDialog(
       return AlertDialog(
         // ignore: prefer_const_literals_to_create_immutables
         title: Row(children: [
-          Text(!isQuizMaxedOut
-              ? 'Play quiz for 1 '
-              : "Attention"),
-          if (!isQuizMaxedOut) const FaIcon(
-            FontAwesomeIcons.coins,
-            size: 16,
-          ) else const SizedBox(),
+          Text(!isQuizMaxedOut ? 'Play quiz for 1 ' : "Attention"),
+          if (!isQuizMaxedOut)
+            const FaIcon(
+              FontAwesomeIcons.coins,
+              size: 16,
+            )
+          else
+            const SizedBox(),
         ]),
         content: SingleChildScrollView(
           child: ListBody(
@@ -106,14 +111,14 @@ Future<void> payCoinAndPlayQuizDialog(
             children: <Widget>[
               Text(!isQuizMaxedOut
                   ? 'Do you want to pay 1 coin and start the quiz now?'
-                  : "You have already completed this quiz 100% correctly. You can still play, it won't cost you coins and you can't earn coins from it. Proceed?"),
+                  : "You have already completed this pack 100% correctly. You can still play, it won't cost you coins and you can't earn coins from it. Proceed?"),
             ],
           ),
         ),
         actions: <Widget>[
           TextButton(
             onPressed: () async {
-              if(isQuizMaxedOut) {
+              if (isQuizMaxedOut) {
                 // ignore: avoid_print
                 print("Maxed out...");
                 // ignore: avoid_print
@@ -122,8 +127,8 @@ Future<void> payCoinAndPlayQuizDialog(
                 await Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => PlayQuiz(quizId, quizIndex)));
-
+                        builder: (context) =>
+                            PlayQuiz(quizId, quizIndex, quizTitle)));
               }
 
               if (coinsProvider.coins == "0") {
@@ -156,7 +161,8 @@ Future<void> payCoinAndPlayQuizDialog(
                 await Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => PlayQuiz(quizId, quizIndex)));
+                        builder: (context) =>
+                            PlayQuiz(quizId, quizIndex, quizTitle)));
               }
             },
             child: const Text('Yes'),

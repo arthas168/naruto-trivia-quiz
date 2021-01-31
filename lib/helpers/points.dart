@@ -9,10 +9,10 @@ final Map<String, String> points = {
   "p70R7u3q8g9n14n8": "3,4,5",
 
   // Sakura
-  "4RL2D7t46B529454": "100,100,3",
+  "4RL2D7t46B529454": "3,3,3",
 
   // Iruka
-  "L8145192728L587S": "100,100,3",
+  "L8145192728L587S": "3,3,3",
 
   // Kakashi
   "7kB33P3564U25dbG": "4,4,5",
@@ -40,6 +40,9 @@ final Map<String, String> points = {
 
   //  Preliminary round
   "9515802294049839": "8,10,12",
+
+//  Preliminary round part 2
+  "16R44952A6U69322": "8,10,12",
 
   // Training 1
   "sttgmp6ucdoorrqf": "8,9,10",

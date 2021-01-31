@@ -18,8 +18,9 @@ import 'package:quizapp/widgets/widgets.dart';
 class PlayQuiz extends StatefulWidget {
   final String quizId;
   final int quizIndex;
+  final String quizTitle;
 
-  const PlayQuiz(this.quizId, this.quizIndex);
+  const PlayQuiz(this.quizId, this.quizIndex, this.quizTitle);
 
   @override
   _PlayQuizState createState() => _PlayQuizState();
@@ -95,7 +96,13 @@ class _PlayQuizState extends State<PlayQuiz> {
     return Scaffold(
       backgroundColor: SECONDARY_COLOR,
       appBar: AppBar(
-          title: appBar(context),
+          title: Text(
+            widget.quizTitle,
+            style: const TextStyle(
+                color: SECONDARY_COLOR,
+                fontSize: 18,
+                fontWeight: FontWeight.bold),
+          ),
           centerTitle: true,
           backgroundColor: MAIN_COLOR,
           elevation: 0,
@@ -129,7 +136,13 @@ class _PlayQuizState extends State<PlayQuiz> {
                   final pointsToGetOneCoin = packPoints.split(",")[1];
                   final pointsToGetThreeCoins = packPoints.split(",")[2];
 
+                  String _message =
+                      "Your score isn't enough to unlock the next pack. Better luck next time!";
+
                   if (_correctAnswers >= int.parse(pointsToPass)) {
+                    _message =
+                        "You scored just enough points to pass the pack. Good job! If you want to get coins from it, try again.";
+
                     // ignore: avoid_print
                     print("unlocking next...");
 
@@ -141,6 +154,9 @@ class _PlayQuizState extends State<PlayQuiz> {
                   }
 
                   if (_correctAnswers == int.parse(pointsToGetOneCoin)) {
+                    _message =
+                        "You scored enough points to pass the pack AND receive 1 coin. Awesome job! If you still want to get 3 coins, try again";
+
                     // ignore: avoid_print
                     print("adding 1 coin...");
                     final currentPointsInt = int.parse(coinsProvider.coins);
@@ -156,17 +172,21 @@ class _PlayQuizState extends State<PlayQuiz> {
                         coinsMap, currentUser.email.toString());
                   }
 
-                  if (_correctAnswers == int.parse(pointsToGetThreeCoins)) {
-                    // ignore: avoid_print
+                  var maxedOutCurrent =
+                      maxedOutQuizzesProvider.maxedOutQuizzes;
 
+                  if (_correctAnswers == int.parse(pointsToGetThreeCoins)) {
+                    _message =
+                        "LEGENDARY! You passed the pack 100% and won 3 coins!";
+                    // ignore: avoid_print
 
                     final currentUser = await databaseService.getCurrentUser();
 
-                    var maxedOutCurrent =
-                        maxedOutQuizzesProvider.maxedOutQuizzes;
+                    if (maxedOutCurrent.contains(widget.quizId)) {
+                      _message = "";
+                    }
 
-                    if(!maxedOutCurrent.contains(widget.quizId)) {
-
+                    if (!maxedOutCurrent.contains(widget.quizId)) {
                       print("adding 3 coins...");
                       final currentPointsInt = int.parse(coinsProvider.coins);
                       coinsProvider.setCoins((currentPointsInt + 3).toString());
@@ -177,7 +197,8 @@ class _PlayQuizState extends State<PlayQuiz> {
 
                       maxedOutCurrent += ",${widget.quizId}";
 
-                      maxedOutQuizzesProvider.setMaxedOutQuizzes(maxedOutCurrent);
+                      maxedOutQuizzesProvider
+                          .setMaxedOutQuizzes(maxedOutCurrent);
 
                       databaseService.addUserCoins(
                           coinsMap, currentUser.email.toString());
@@ -192,7 +213,8 @@ class _PlayQuizState extends State<PlayQuiz> {
                           builder: (context) => Results(
                               correct: _correctAnswers,
                               incorrect: _incorrectAnswers,
-                              total: totalAnswers)));
+                              total: totalAnswers,
+                              message: _message)));
                 }
               },
               color: MAIN_COLOR,

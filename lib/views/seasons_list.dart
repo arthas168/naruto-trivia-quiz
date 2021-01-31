@@ -34,7 +34,7 @@ class _SeasonsListState extends State<SeasonsList> {
       body: Column(
         children: [
           const SizedBox(
-            height: 50,
+            height: 20,
           ),
           Container(
             margin: const EdgeInsets.symmetric(vertical: 20.0),
@@ -55,32 +55,67 @@ class _SeasonsListState extends State<SeasonsList> {
                     );
                   },
                   child: Container(
-                    decoration: BoxDecoration(
-                        color: MAIN_COLOR,
-                        borderRadius: BorderRadius.circular(30)),
-                    margin: const EdgeInsets.symmetric(horizontal: 20),
-                    width: 225.0,
-                    child: const Center(
-                      child: Text(
-                        "Naruto",
-                        style: TextStyle(
-                            color: SECONDARY_COLOR,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold),
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    height: 150,
+                    width: 250,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Stack(
+                        children: [
+                          const Image(
+                            image: AssetImage(
+                              'assets/naruto_beginning.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          Container(
+                            color: Colors.black38,
+                            height: 200,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Naruto: The beginning",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 28,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.circular(30)),
-                  margin: const EdgeInsets.symmetric(horizontal: 20),
-                  width: 225.0,
-                  child: const Icon(
-                    Naruto.seal_5150534,
-                    color: SECONDARY_COLOR,
-                    size: 92,
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => QuizListSeasonOne(
+                          unlockedQuizzes:
+                              unlockedQuizzesProvider.numOfUnlockedQuizzes,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(8)),
+                    margin: const EdgeInsets.only(right: 40),
+                    width: 170.0,
+                    child: const Icon(
+                      Naruto.seal_5150534,
+                      color: SECONDARY_COLOR,
+                      size: 92,
+                    ),
                   ),
                 ),
               ],
@@ -89,13 +124,10 @@ class _SeasonsListState extends State<SeasonsList> {
           const Spacer(),
           const Image(
             image: AssetImage(
-              'assets/ramen.png',
+              'assets/naruto_shipuuden.png',
             ),
-            height: 92,
+            height: 225,
           ),
-          const SizedBox(
-            height: 25,
-          )
         ],
       ),
     );
