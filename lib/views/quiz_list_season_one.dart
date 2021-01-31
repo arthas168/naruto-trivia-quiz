@@ -11,17 +11,35 @@ import 'package:quizapp/services/database.dart';
 import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/views/user_menu.dart';
 import 'package:quizapp/widgets/widgets.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
+// ignore: must_be_immutable
 class QuizListSeasonOne extends StatefulWidget {
+  int _unlockedQuizzes;
+  QuizListSeasonOne({int unlockedQuizzes}) {
+    _unlockedQuizzes = unlockedQuizzes;
+  }
+
   @override
-  _QuizListSeasonOneState createState() => _QuizListSeasonOneState();
+  // ignore: no_logic_in_create_state
+  _QuizListSeasonOneState createState() =>
+      _QuizListSeasonOneState(unlockedQuizzes: _unlockedQuizzes);
 }
 
 class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
   Stream quizStream;
+  int _unlockedQuizzes;
+
+  _QuizListSeasonOneState({int unlockedQuizzes}) {
+    _unlockedQuizzes = unlockedQuizzes;
+  }
+
   // ignore: type_annotate_public_apis, prefer_typing_uninitialized_variables
   var preferences;
   DatabaseService databaseService = DatabaseService();
+
+  final scrollDirection = Axis.vertical;
+  AutoScrollController controller;
 
   Widget quizList() {
     return Container(
@@ -32,17 +50,25 @@ class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
           return snapshot.data == null
               ? Container()
               : ListView.builder(
+                  controller: controller,
+                  scrollDirection: scrollDirection,
                   itemCount:
                       int.parse(snapshot.data.documents.length.toString()),
                   itemBuilder: (context, index) {
-                    return QuizTile(
+                    return AutoScrollTag(
+                      key: ValueKey(index),
+                      controller: controller,
+                      index: index,
+                      child: QuizTile(
                         title: snapshot.data.documents[index]
                             .data()["title"]
                             .toString(),
                         quizId: snapshot.data.documents[index]
                             .data()["quizId"]
                             .toString(),
-                        index: index);
+                        index: index,
+                      ),
+                    );
                   });
         },
       ),
@@ -57,12 +83,20 @@ class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
         // preferences = await SharedPreferences.getInstance();
       });
     });
-
     super.initState();
+
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: scrollDirection);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToIndex());
   }
 
   @override
   Widget build(BuildContext context) {
+    print(_unlockedQuizzes);
+
     return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: SECONDARY_COLOR,
@@ -84,6 +118,11 @@ class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
             elevation: 0,
             brightness: Brightness.light),
         body: quizList());
+  }
+
+  Future _scrollToIndex() async {
+    await controller.scrollToIndex(_unlockedQuizzes - 3,
+        preferPosition: AutoScrollPosition.begin);
   }
 }
 

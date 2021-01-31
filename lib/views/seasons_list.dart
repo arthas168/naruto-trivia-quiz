@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/naruto_icons.dart';
+import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/views/quiz_list_season_one.dart';
 import 'package:quizapp/views/user_menu.dart';
 import 'package:quizapp/widgets/widgets.dart';
@@ -14,6 +16,9 @@ class SeasonsList extends StatefulWidget {
 class _SeasonsListState extends State<SeasonsList> {
   @override
   Widget build(BuildContext context) {
+    final unlockedQuizzesProvider =
+        Provider.of<UnlockedQuizzesProvider>(context);
+
     return Scaffold(
       backgroundColor: SECONDARY_COLOR,
       appBar: AppBar(
@@ -42,7 +47,10 @@ class _SeasonsListState extends State<SeasonsList> {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => QuizListSeasonOne(),
+                        builder: (context) => QuizListSeasonOne(
+                          unlockedQuizzes:
+                              unlockedQuizzesProvider.numOfUnlockedQuizzes,
+                        ),
                       ),
                     );
                   },

@@ -3,8 +3,6 @@ import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
-import 'quiz_list_season_one.dart';
-
 class Results extends StatefulWidget {
   final int correct, incorrect, total;
 
