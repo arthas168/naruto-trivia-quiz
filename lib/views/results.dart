@@ -23,6 +23,17 @@ class _ResultsState extends State<Results> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: MAIN_COLOR,
+          onPressed: () async {
+            await Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => SeasonsList()));
+          },
+          child: const Icon(
+            Icons.arrow_back,
+            color: SECONDARY_COLOR,
+          ),
+        ),
         backgroundColor: SECONDARY_COLOR,
         appBar: AppBar(
             title: appBar(context),
@@ -50,20 +61,6 @@ class _ResultsState extends State<Results> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SeasonsList()));
-                    },
-                    child: const Text(
-                      "Go back to Home",
-                      style: TextStyle(
-                          color: MAIN_COLOR,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
-                    ))
               ],
             ))));
   }
