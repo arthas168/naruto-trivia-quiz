@@ -2,10 +2,11 @@ import "package:flutter/material.dart";
 import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/services/auth.dart';
+import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/views/sign_up.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
-import 'home.dart';
+import 'quiz_list_season_one.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -101,7 +102,7 @@ class _SignInState extends State<SignIn> {
           HelperFunctions.saveLoggedUserDetails(isLoggedIn: true);
 
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Home()));
+              context, MaterialPageRoute(builder: (context) => SeasonsList()));
         }
       });
     } else {

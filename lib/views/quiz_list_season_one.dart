@@ -8,15 +8,16 @@ import 'package:quizapp/helpers/naruto_icons.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/database.dart';
+import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/views/user_menu.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
-class Home extends StatefulWidget {
+class QuizListSeasonOne extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _QuizListSeasonOneState createState() => _QuizListSeasonOneState();
 }
 
-class _HomeState extends State<Home> {
+class _QuizListSeasonOneState extends State<QuizListSeasonOne> {
   Stream quizStream;
   // ignore: type_annotate_public_apis, prefer_typing_uninitialized_variables
   var preferences;
@@ -63,6 +64,16 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: SECONDARY_COLOR,
+          onPressed: () async {
+            await Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SeasonsList()));
+          },
+          child: const Icon(Icons.arrow_back),
+        ),
         backgroundColor: SECONDARY_COLOR,
         appBar: AppBar(
             leading: Coins(),
@@ -124,39 +135,41 @@ class QuizTile extends StatelessWidget {
         }
       },
       child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
-          height: 75,
-          child: Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  color: unlockedQuizzesProvider.numOfUnlockedQuizzes > index
-                      ? MAIN_COLOR
-                      : Colors.grey,
-                  width: MediaQuery.of(context).size.width - 48,
-                ),
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        height: 75,
+        child: Stack(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                color: unlockedQuizzesProvider.numOfUnlockedQuizzes > index
+                    ? MAIN_COLOR
+                    : Colors.grey,
+                width: MediaQuery.of(context).size.width - 48,
               ),
-              Container(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      if (unlockedQuizzesProvider.numOfUnlockedQuizzes > index)
-                        Text(
-                          title,
-                          style: const TextStyle(
-                              color: SECONDARY_COLOR,
-                              fontSize: 19,
-                              fontWeight: FontWeight.w600),
-                        )
-                      else
-                        const Icon(Naruto.seal_5150534, size: 55),
-                      const SizedBox(height: 5),
-                    ],
-                  ))
-            ],
-          )),
+            ),
+            Container(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (unlockedQuizzesProvider.numOfUnlockedQuizzes > index)
+                    Text(
+                      title,
+                      style: const TextStyle(
+                          color: SECONDARY_COLOR,
+                          fontSize: 19,
+                          fontWeight: FontWeight.w600),
+                    )
+                  else
+                    const Icon(Naruto.seal_5150534, size: 55),
+                  const SizedBox(height: 5),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

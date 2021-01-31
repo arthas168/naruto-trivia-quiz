@@ -57,11 +57,9 @@ Future<void> watchAdForCoinsDialog(BuildContext context) async {
                   coinsProvider.setCoins(
                       (int.parse(coinsProvider.coins) + 1).toString());
                 }
-
-
               };
-              
 
+              // TODO: init watching
             },
             child: const Text('Yes'),
           ),
@@ -133,7 +131,7 @@ Future<void> payCoinAndPlayQuizDialog(
                 databaseService.addUserCoins(
                     coinsMap, currentUser.email.toString());
 
-                Navigator.pushReplacement(
+                await Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) => PlayQuiz(quizId, quizIndex)));

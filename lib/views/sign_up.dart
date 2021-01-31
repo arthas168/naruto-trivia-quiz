@@ -3,10 +3,11 @@ import "package:flutter/material.dart";
 import 'package:quizapp/helpers/constants.dart';
 import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/services/auth.dart';
+import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/views/sign_in.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
-import 'home.dart';
+import 'quiz_list_season_one.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -59,8 +60,8 @@ class _SignUpState extends State<SignUp> {
           if (value.toString().substring(0, 1) != "[") {
             HelperFunctions.saveLoggedUserDetails(isLoggedIn: true);
 
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => Home()));
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => SeasonsList()));
           } else {
             // TODO: Make this more generic and export to 'utils' folder
             final int lastSquareBracketIndex =

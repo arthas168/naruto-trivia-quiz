@@ -13,7 +13,8 @@ class DatabaseService {
     });
   }
 
-  Future<void> addQuizSeasonTwoData(Map<String, dynamic> quizData, String quizId) async {
+  Future<void> addQuizSeasonTwoData(
+      Map<String, dynamic> quizData, String quizId) async {
     await FirebaseFirestore.instance
         .collection("QuizSeasonTwo")
         .doc(quizId)
@@ -36,7 +37,6 @@ class DatabaseService {
       print(e.toString());
     });
   }
-
 
   Future<void> addQuestionData(
       Map<String, dynamic> questionData, String quizId) async {
@@ -136,4 +136,3 @@ class DatabaseService {
         .get();
   }
 }
-

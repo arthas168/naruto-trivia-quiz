@@ -65,7 +65,6 @@ final Map<String, String> points = {
   // Sasuke and the sand shinobies
   "CQ81H3HAKs85X8RK": "6,7,8",
 
-
   // Naruto vs Gaara
   "jJauPu9qrww6DlFf": "10,11,12",
 

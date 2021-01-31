@@ -7,7 +7,8 @@ import 'package:quizapp/helpers/functions.dart';
 import 'package:quizapp/providers/coins_provider.dart';
 import 'package:quizapp/providers/unlocked_quizzes_provider.dart';
 import 'package:quizapp/services/ad_service.dart';
-import 'package:quizapp/views/home.dart';
+import 'package:quizapp/views/quiz_list_season_one.dart';
+import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/views/sign_in.dart';
 
 void main() {
@@ -55,7 +56,7 @@ class _AppState extends State<App> {
               create: (BuildContext context) => CoinsProvider(),
               child: MaterialApp(
                   // todo: disable
-                  home: Home()),
+                  home: SeasonsList()),
             ),
           );
         }

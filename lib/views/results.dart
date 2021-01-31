@@ -1,8 +1,9 @@
 import "package:flutter/material.dart";
 import 'package:quizapp/helpers/constants.dart';
+import 'package:quizapp/views/seasons_list.dart';
 import 'package:quizapp/widgets/widgets.dart';
 
-import 'home.dart';
+import 'quiz_list_season_one.dart';
 
 class Results extends StatefulWidget {
   final int correct, incorrect, total;
@@ -51,8 +52,10 @@ class _ResultsState extends State<Results> {
                 const SizedBox(height: 30),
                 GestureDetector(
                     onTap: () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => Home()));
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SeasonsList()));
                     },
                     child: const Text(
                       "Go back to Home",
