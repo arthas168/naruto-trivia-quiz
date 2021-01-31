@@ -13,6 +13,31 @@ class DatabaseService {
     });
   }
 
+  Future<void> addQuizSeasonTwoData(Map<String, dynamic> quizData, String quizId) async {
+    await FirebaseFirestore.instance
+        .collection("QuizSeasonTwo")
+        .doc(quizId)
+        .set(quizData)
+        .catchError((e) {
+      // ignore: avoid_print
+      print(e.toString());
+    });
+  }
+
+  Future<void> addQuestionSeasonTwoData(
+      Map<String, dynamic> questionData, String quizId) async {
+    await FirebaseFirestore.instance
+        .collection("QuizSeasonTwo")
+        .doc(quizId)
+        .collection("QuestionAndAnswer")
+        .add(questionData)
+        .catchError((e) {
+      // ignore: avoid_print
+      print(e.toString());
+    });
+  }
+
+
   Future<void> addQuestionData(
       Map<String, dynamic> questionData, String quizId) async {
     await FirebaseFirestore.instance
@@ -59,6 +84,13 @@ class DatabaseService {
         .snapshots();
   }
 
+  Future<Stream> getQuizSeasonTwoData() async {
+    return FirebaseFirestore.instance
+        .collection("QuizSeasonTwo")
+        .orderBy("date")
+        .snapshots();
+  }
+
   // ignore: always_declare_return_types, type_annotate_public_apis
   getCoinsData() async {
     final user = await getCurrentUser();
@@ -93,4 +125,15 @@ class DatabaseService {
         .orderBy("date")
         .get();
   }
+
+  // ignore: always_declare_return_types, type_annotate_public_apis
+  getSpecificQuizSeasonTwoData(String quizId) async {
+    return await FirebaseFirestore.instance
+        .collection("QuizSeasonTwo")
+        .doc(quizId)
+        .collection("QuestionAndAnswer")
+        .orderBy("date")
+        .get();
+  }
 }
+
